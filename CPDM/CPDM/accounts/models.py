@@ -1,39 +1,62 @@
 from django.core.validators import MinLengthValidator
-from django.db import models
 from django.template.defaultfilters import slugify
+from django.contrib.auth import models as auth_models
+from django.contrib.auth.models import AbstractUser
+from django.utils.translation import gettext_lazy as _
+from django.utils import timezone
+from django.db import models
 
+from CPDM.accounts.managers import AccountUserManager
 from CPDM.mixins.model_mixins import CreatedUpdatedMixin
-from CPDM.validators.accounts_validators import validate_username
+
+
+# Auth data in this model
+class AccountsUser(auth_models.AbstractBaseUser, auth_models.PermissionsMixin):
+
+    email = models.EmailField(
+        unique=True,
+        error_messages={
+            "unique": _("A user with that email already exists."),
+        },
+    )
+
+    is_staff = models.BooleanField(
+        _("staff status"),
+        default=False,
+        help_text=_("Designates whether the user can log into this admin site."),
+    )
+
+    is_active = models.BooleanField(
+        _("active"),
+        default=True,
+        help_text=_(
+            "Designates whether this user should be treated as active. "
+            "Unselect this instead of deleting accounts."
+        ),
+    )
+
+    date_joined = models.DateTimeField(_("date joined"), default=timezone.now)
+
+    USERNAME_FIELD = "email"        # SET EMAIL AS CREDENTIALS
+
+    objects = AccountUserManager()
+
+    slug = models.SlugField(
+        editable=False,
+    )
+
+    def save(self, *args, **kwargs):  # overwrite save() to generate and create unique slug
+        self.slug = slugify(self.email)
+        return super().save(*args, **kwargs)
 
 
 class Profile(CreatedUpdatedMixin, models.Model):
-    MAX_USERNAME_LENGTH = 15
-    MIN_USERNAME_LENGTH = 2
 
     MAX_FIRST_NAME_LENGTH = 15
     MIN_FIRST_NAME_LENGTH = 3
 
     MAX_LAST_NAME_LENGTH = 15
     MIN_LAST_NAME_LENGTH = 3
-
-    MAX_PASSWORD_LENGTH = 30
-    MIN_PASSWORD_LENGTH = 6
-
-    username = models.CharField(
-        max_length=MAX_USERNAME_LENGTH,
-        validators=[
-            MinLengthValidator(
-                MIN_USERNAME_LENGTH,
-                message=f'Cannot have less than {MIN_USERNAME_LENGTH} characters'
-            ),
-            validate_username,
-        ],
-        unique=True,
-        error_messages={'unique': 'Username already exists. Please choose a different one'},
-        help_text=f"Field is required.\nEnsure username contains only letters, numbers, and underscores.",
-        blank=False,
-        null=False,
-    )
 
     first_name = models.CharField(
         max_length=MAX_FIRST_NAME_LENGTH,
@@ -44,8 +67,8 @@ class Profile(CreatedUpdatedMixin, models.Model):
             ),
         ],
         help_text="Field is required",
-        blank=False,
-        null=False,
+        blank=True,
+        null=True,
     )
 
     last_name = models.CharField(
@@ -53,40 +76,27 @@ class Profile(CreatedUpdatedMixin, models.Model):
         validators=[
             MinLengthValidator(
                 MIN_LAST_NAME_LENGTH,
-                message=f'Cannot have less than {MIN_PASSWORD_LENGTH} characters'
+                message=f'Cannot have less than {MIN_LAST_NAME_LENGTH} characters'
             ),
         ],
         help_text="Field is required",
-        blank=False,
-        null=False,
+        blank=True,
+        null=True,
     )
 
-    password = models.CharField(
-        max_length=MAX_PASSWORD_LENGTH,
-        validators=[
-            MinLengthValidator(
-                MIN_PASSWORD_LENGTH,
-                message=f'Cannot have less than {MIN_PASSWORD_LENGTH} characters'
-            ),
-
-        ],
-        help_text=f"Field is required. Password must be at least {MIN_PASSWORD_LENGTH} characters long.\n\
-         Password must contain at least 2 special characters, one capital letter."
-    )
-
-    email = models.EmailField(
-        help_text="Field is required",
-        blank=False,
-        null=False,
-    )
-
-    slug = models.SlugField(
-        editable=False,
-    )
-
-    def save(self, *args, **kwargs):  # overwrite save() to generate and create unique slug
-        self.slug = slugify(self.username)
-        return super().save(*args, **kwargs)
+    user = models.OneToOneField(       # set one-to-one relation to UserModel
+        AccountsUser,
+        on_delete=models.CASCADE,
+        primary_key=True,
+    )   # we can access profile_obj.pk and also true profile_obj.user_id
 
     def __str__(self) -> str:
-        return f'{self.first_name} {self.last_name}'
+        if self.first_name and self.last_name:
+            return f'{self.first_name} {self.last_name}'
+        elif self.first_name and not self.last_name:
+            return f'{self.first_name}'
+        elif self.last_name and not self.first_name:
+            return f'{self.last_name}'
+        else:
+            return ''
+

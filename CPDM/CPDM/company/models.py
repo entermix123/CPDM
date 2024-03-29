@@ -6,8 +6,7 @@ from CPDM.mixins.model_mixins import CreatedUpdatedMixin
 
 
 class Company(CreatedUpdatedMixin, models.Model):
-
-    class CompanyType(models.TextChoices):      # TODO: pre-modify structures for company types
+    class CompanyType(models.TextChoices):  # TODO: pre-modify structures for company types
         SERVICE = 'SERVICE',
         PRODUCTION = 'PRODUCTION',
         OTHER = 'OTHER',
@@ -43,13 +42,6 @@ class Company(CreatedUpdatedMixin, models.Model):
         auto_now_add=True,
     )
 
-    headquarters_location = models.CharField(
-        max_length=255,
-        help_text="Field is required. Set the locations of the headquarters",
-        blank=True,
-        null=True,
-    )
-
     industry = models.CharField(
         max_length=100,
         blank=True,
@@ -70,3 +62,37 @@ class Company(CreatedUpdatedMixin, models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Location(models.Model):
+    MAX_LENGTH_NAME = 45
+    MIN_LENGTH_NAME = 2
+
+    name = models.CharField(
+        max_length=MAX_LENGTH_NAME,
+        validators=[
+            MinLengthValidator(
+                MIN_LENGTH_NAME,
+                message=f"Location name cannot have less than {MIN_LENGTH_NAME} characters."
+                        f" Try to add continent, country and city"
+            )
+        ],
+        blank=False,
+        null=False,
+    )
+
+    latitude = models.FloatField(
+        blank=True,
+        null=True,
+    )
+
+    longitude = models.FloatField(
+        blank=True,
+        null=True,
+    )
+
+    company = models.ForeignKey(
+        Company,
+        on_delete=models.CASCADE,
+        related_name='locations',
+    )
