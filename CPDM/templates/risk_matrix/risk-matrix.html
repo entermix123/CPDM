@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Risk Matrix</h1>
+    <table>
+        <thead>
+        <tr>
+            <th>Risk</th>
+            {% for risk_level in risk_levels %}
+                <th>{{ risk_level.name }}</th>
+            {% endfor %}
+        </tr>
+        </thead>
+        <tbody>
+        {% for risk in risks %}
+            <tr>
+                <td>{{ risk.name }}</td>
+                {% for risk_level in risk_levels %}
+                    <td>
+                        <!-- Here you might add input fields for users to input data -->
+                    </td>
+                {% endfor %}
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
