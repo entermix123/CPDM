@@ -3,6 +3,7 @@ from django.core.validators import MinLengthValidator
 from django.db import models
 
 from CPDM.activities.models import Activity
+from CPDM.company.models import Company
 from CPDM.mixins.model_mixins import CreatedUpdatedMixin
 from CPDM.processes.models import Process
 
@@ -31,6 +32,12 @@ class Department(CreatedUpdatedMixin, models.Model):
         UserModel,
         on_delete=models.CASCADE,
         related_name='departments',
+    )
+
+    company = models.ForeignKey(
+        Company,
+        on_delete=models.CASCADE,
+        related_name='departments'
     )
 
     activities = models.ManyToManyField(
