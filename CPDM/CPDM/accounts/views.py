@@ -1,9 +1,12 @@
-from django.contrib.auth import views as auth_views, authenticate, login, logout
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views import generic as views
 
 from CPDM.accounts.forms import AccountUserCreationForm, AccountLoginForm
+from CPDM.accounts.models import Profile
 
 
 class LoginUserView(views.View):
@@ -44,12 +47,22 @@ class RegisterUserView(views.CreateView):
 # email:    dan@dan.com
 # Password: 123
 
-
-def logout_view(request):
+@login_required
+def logout_view(request, pk):
     logout(request)
     # Redirect to a page after logout (optional)
     return redirect('index')
 
 
-class LogoutUserView(auth_views.LogoutView):
-    next_page = reverse_lazy('index')
+class ProfileDetailView(LoginRequiredMixin, views.DetailView):
+    model = Profile
+    template_name = 'accounts/profile_details.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        user = self.request.user
+        context['companies_owned'] = user.companies.all()
+        context['activities_owned'] = user.activities.all()
+
+        return context
+

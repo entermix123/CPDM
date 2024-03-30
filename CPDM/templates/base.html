@@ -16,9 +16,10 @@
         <li><a href="{% url 'index' %}">Home</a></li>
         {% if profile %}
             <li><a href="#">Settings</a></li>
-            <li><a href="#">Profile</a></li>
+            <li><a href="{% url 'profile_details' pk=request.user.pk %}">Profile</a></li>
             <li><a href="#">Companies</a></li>
-            <li><a href="{% url 'logout_user' %}">Logout</a></li>
+            <li><a href="{% url 'activity_list' pk=request.user.pk %}">Activities</a></li>
+            <li><a href="{% url 'logout_user' pk=request.user.pk %}">Logout</a></li>
         {% else %}
             <li><a href="{% url 'about' %}">About</a></li>
             <li><a href="#">Services</a></li>

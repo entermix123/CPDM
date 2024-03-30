@@ -1,3 +1,4 @@
+from django import forms
 from django.contrib.auth import forms as auth_forms, get_user_model
 
 from CPDM.accounts.models import Profile
@@ -34,12 +35,6 @@ class AccountUserCreationForm(auth_forms.UserCreationForm):
         return user
 
 
-class AccountUserChangeForm(auth_forms.UserChangeForm):
-    class Meta(auth_forms.UserChangeForm.Meta):
-        model = UserModel
-        fields = '__all__'
-
-
 class AccountLoginForm(auth_forms.AuthenticationForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -48,3 +43,11 @@ class AccountLoginForm(auth_forms.AuthenticationForm):
             {'placeholder': 'Email'})                   # Add placeholder
         self.fields['password'].widget.attrs.update(
             {'placeholder': 'Password'})                # Add placeholder
+
+
+class ProfileChangeForm(auth_forms.UserChangeForm):
+    class Meta(auth_forms.UserChangeForm.Meta):
+        model = Profile
+        fields = '__all__'
+        exclude = ['user']
+

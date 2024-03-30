@@ -1,25 +1,32 @@
+from django.contrib.auth import get_user_model
+from django.template.defaultfilters import slugify
 from django.core.validators import MinLengthValidator
 from django.db import models
 
-from CPDM.accounts.models import Profile
 from CPDM.mixins.model_mixins import CreatedUpdatedMixin
 
 
-class Company(CreatedUpdatedMixin, models.Model):
+UserModel = get_user_model()
+
+
+class Company(models.Model):
     class CompanyType(models.TextChoices):  # TODO: pre-modify structures for company types
         SERVICE = 'SERVICE',
         PRODUCTION = 'PRODUCTION',
-        OTHER = 'OTHER',
+        BASE = 'BASE',
 
     MAX_NAME_LENGTH = 15
     MIN_NAME_LENGTH = 3
+
+    MAX_LENGTH_INDUSTRY = 100
+    MAX_LENGTH_WEBSITE = 100
 
     MAX_TYPE_LENGTH = 10
 
     type = models.CharField(
         max_length=MAX_TYPE_LENGTH,
         choices=CompanyType.choices,
-        default=CompanyType.OTHER,
+        default=CompanyType.BASE,
         verbose_name="Company Type"
     )
 
@@ -42,23 +49,35 @@ class Company(CreatedUpdatedMixin, models.Model):
         auto_now_add=True,
     )
 
+    last_modified = models.DateTimeField(
+        auto_now=True,
+    )
+
     industry = models.CharField(
-        max_length=100,
+        max_length=MAX_LENGTH_INDUSTRY,
         blank=True,
         null=True,
     )
 
     website = models.URLField(
-        max_length=200,
+        max_length=MAX_LENGTH_WEBSITE,
         blank=True,
         null=True,
     )
 
     owner = models.ForeignKey(
-        Profile,
+        UserModel,
         on_delete=models.CASCADE,
         related_name='companies',
     )
+
+    slug = models.SlugField(
+        editable=False,
+    )
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(f'{self.name} + {self.founded_date}')
+        return super().save(*args, **kwargs)
 
     def __str__(self):
         return self.name

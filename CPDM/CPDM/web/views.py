@@ -4,17 +4,18 @@ from django.shortcuts import render
 UserModel = get_user_model()
 
 
-def get_profile():                  # check if profile is logged in
-    return UserModel.objects.first()
-
-
 def index(request):
     user = request.user
+    pk = user.pk
+
+    context = {
+        'pk': pk,
+    }
 
     if user.is_anonymous:
         return render(request, 'web/home-no-profile.html')
 
-    return render(request, 'web/home-with-profile.html')
+    return render(request, 'web/home-with-profile.html', context)
 
 
 def about(request):

@@ -11,7 +11,7 @@ from CPDM.mixins.model_mixins import CreatedUpdatedMixin
 
 
 # Auth data in this model
-class AccountsUser(auth_models.AbstractBaseUser, auth_models.PermissionsMixin):
+class AccountsUser(CreatedUpdatedMixin, auth_models.AbstractBaseUser, auth_models.PermissionsMixin):
 
     email = models.EmailField(
         unique=True,
@@ -46,7 +46,7 @@ class AccountsUser(auth_models.AbstractBaseUser, auth_models.PermissionsMixin):
     )
 
     def save(self, *args, **kwargs):  # overwrite save() to generate and create unique slug
-        self.slug = slugify(self.email)
+        self.slug = slugify(f'{self.email} + {self.created}')
         return super().save(*args, **kwargs)
 
 
@@ -84,19 +84,18 @@ class Profile(CreatedUpdatedMixin, models.Model):
         null=True,
     )
 
-    user = models.OneToOneField(       # set one-to-one relation to UserModel
+    user = models.OneToOneField(
         AccountsUser,
         on_delete=models.CASCADE,
         primary_key=True,
     )   # we can access profile_obj.pk and also true profile_obj.user_id
 
-    def __str__(self) -> str:
+    def __str__(self):
         if self.first_name and self.last_name:
-            return f'{self.first_name} {self.last_name}'
-        elif self.first_name and not self.last_name:
-            return f'{self.first_name}'
-        elif self.last_name and not self.first_name:
-            return f'{self.last_name}'
+            return f"{self.first_name} {self.last_name}"
+        elif self.first_name:
+            return self.first_name
+        elif self.last_name:
+            return self.last_name
         else:
-            return ''
-
+            return self.user.email

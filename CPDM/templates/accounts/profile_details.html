@@ -3,8 +3,11 @@
 
 {% block content %}
     <h2>Hello {{ profile }}</h2>
-    <h3><a src="#">Edit your Profile</a></h3>
+    <h3><a href="#">Edit your Profile</a></h3>
     <br>
+    <h2>Companies</h2>
+    <h3><a href="#">Create a Company</a></h3>
+    
     {% if companies_owned %}
         <h3>Companies Owned: {{ companies_owned.count }}</h3>
         {% for company in companies_owned %}
@@ -18,18 +21,19 @@
         {% endfor %}
     {% else %}
         <h3>You don't own any companies yet.</h3>
-        <h3><a src="#">Create a Company</a></h3>
     {% endif %}
-    
+
     <div>
         <br>
     </div>
-    
+
+    <h2>Activities</h2>
+    <h3><a href="{% url 'activity_create' pk=request.user.pk %}">Create an Activity</a></h3>
+    <br>
     {% if activities_owned %}
-        <h3><a src="#">Activities count: {{ activities_owned.count }}</a></h3>
+        <h3>Activities count: {{ activities_owned.count }}</h3>
     {% else %}
         <h3>You don't have any activities yet.</h3>
-        <h3><a src="#">Create an Activity</a></h3>
     {% endif %}
-    
+
 {% endblock %}

@@ -12,7 +12,7 @@
     <div class="container">
         <div class="content">
             <h2>Logout</h2>
-            <form action="{% url 'logout_user' %}" method="post">
+            <form action="{% url 'logout_user' pk=request.user.pk %}" method="post">
                 {% csrf_token %}
                 <button>Logout</button>
             </form>

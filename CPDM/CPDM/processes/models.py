@@ -55,11 +55,6 @@ class ProcessStep(models.Model):
 
     number = models.PositiveIntegerField()
 
-    instruction = models.ForeignKey(
-        Process, on_delete=models.CASCADE,
-        related_name="steps"
-    )
-
     step_type = models.CharField(
         max_length=MAX_STEP_TYPE_LENGTH,
         choices=StepTypes.choices,
@@ -73,3 +68,12 @@ class ProcessStep(models.Model):
         max_length=MAX_STEP_TYPE_LENGTH,
         choices=StepTypes.choices,
     )
+
+    process = models.ForeignKey(
+        Process,
+        on_delete=models.CASCADE,
+        related_name="steps"
+    )
+
+    def __str__(self):
+        return self.step_label

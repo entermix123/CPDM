@@ -1,9 +1,12 @@
+from django.contrib.auth import get_user_model
 from django.core.validators import MinLengthValidator
 from django.db import models
 
 from CPDM.accounts.models import Profile
-from CPDM.departments.models import Department
 from CPDM.mixins.model_mixins import CreatedUpdatedMixin
+
+
+UserModel = get_user_model()
 
 
 class Activity(CreatedUpdatedMixin, models.Model):
@@ -33,7 +36,7 @@ class Activity(CreatedUpdatedMixin, models.Model):
     )
 
     owner = models.ForeignKey(
-        Profile,
+        UserModel,
         related_name='activities',
         on_delete=models.CASCADE,
     )
