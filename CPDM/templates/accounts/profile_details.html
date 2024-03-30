@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+    <h2>Hello {{ profile }}</h2>
+    <h3><a src="#">Edit your Profile</a></h3>
+    <br>
+    {% if companies_owned %}
+        <h3>Companies Owned: {{ companies_owned.count }}</h3>
+        {% for company in companies_owned %}
+            <h3>Company Name: {{ company }}</h3>
+            <h3>Company locations: {{ company.locations.count }}</h3>
+            <ul>
+                {% for location in company_locations %}
+                    <li>{{ location }}</li>
+                {% endfor %}
+            </ul>
+        {% endfor %}
+    {% else %}
+        <h3>You don't own any companies yet.</h3>
+        <h3><a src="#">Create a Company</a></h3>
+    {% endif %}
+    
+    <div>
+        <br>
+    </div>
+    
+    {% if activities_owned %}
+        <h3><a src="#">Activities count: {{ activities_owned.count }}</a></h3>
+    {% else %}
+        <h3>You don't have any activities yet.</h3>
+        <h3><a src="#">Create an Activity</a></h3>
+    {% endif %}
+    
+{% endblock %}
