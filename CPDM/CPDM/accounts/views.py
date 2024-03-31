@@ -1,4 +1,4 @@
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate, login, logout, get_user_model
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect
@@ -7,6 +7,9 @@ from django.views import generic as views
 
 from CPDM.accounts.forms import AccountUserCreationForm, AccountLoginForm
 from CPDM.accounts.models import Profile
+
+
+UserModel = get_user_model()
 
 
 class LoginUserView(views.View):
@@ -33,6 +36,16 @@ class RegisterUserView(views.CreateView):
     form_class = AccountUserCreationForm
     template_name = 'accounts/register.html'       # choose template
     success_url = reverse_lazy('index')
+
+    def form_valid(self, form):
+        super(RegisterUserView, self).form_valid(form)
+        username = form.cleaned_data['email']
+        raw_password = form.cleaned_data['password1']
+        user = authenticate(email=username, password=raw_password)
+        login(self.request, user)
+
+        return redirect('index')
+
 
 # dan@dan.com
 # 123
@@ -80,3 +93,9 @@ class ProfileDetailView(LoginRequiredMixin, views.DetailView):
         context['activities_owned'] = user.activities.all()
 
         return context
+
+
+class DeleteUserView(LoginRequiredMixin, views.DeleteView):
+    model = UserModel
+    template_name = 'accounts/profile_delete.html'
+    success_url = reverse_lazy('index')

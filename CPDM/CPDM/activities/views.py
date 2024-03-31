@@ -1,7 +1,8 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.forms import modelform_factory
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, ListView, UpdateView, DetailView
+from django.views.generic import CreateView, ListView, UpdateView, DetailView, DeleteView
 
 from CPDM.accounts.models import Profile
 from CPDM.activities.forms import ActivityCreateForm, ActivityUpdateForm
@@ -119,3 +120,28 @@ def activity_update(request, pk, activity_id):
         'form': form,
     }
     return render(request, 'activities/update_activity.html', context)
+
+
+class ActivityDeleteView(LoginRequiredMixin, DeleteView):
+    template_name = 'activities/delete_activity.html'
+    success_url = reverse_lazy('activity_list')
+
+    def get_queryset(self):
+        activity_id = self.kwargs['activity_id']
+        queryset = Activity.objects.filter(pk=activity_id)
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        profile = self.request.user
+        context['profile'] = profile
+        return context
+
+    # create form, because default views.DeleteView do not return deleted form
+    form_class = modelform_factory(Activity, fields=['title', 'description'])
+
+    # populate the form
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['instance'] = self.object
+        return kwargs
