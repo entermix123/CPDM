@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container">
+        <h2>Delete Activity Form</h2>
+        <form action="{% url 'activity_delete' pk=request.user.pk activity_id=activity.pk %}" method="post">
+            {{ form.as_p }}
+            <button type="submit">Delete Activity</button>
+
+            {% csrf_token %}
+        </form>
+    </div>
+{% endblock %}
