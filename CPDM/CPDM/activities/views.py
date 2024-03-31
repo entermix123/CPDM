@@ -5,7 +5,7 @@ from django.urls import reverse_lazy
 from django.views.generic import CreateView, ListView, UpdateView, DetailView, DeleteView
 
 from CPDM.accounts.models import Profile
-from CPDM.activities.forms import ActivityCreateForm, ActivityUpdateForm
+from CPDM.activities.forms import ActivityCreateForm, ActivityUpdateForm, DeleteActivityForm
 from CPDM.activities.models import Activity
 
 
@@ -123,25 +123,49 @@ def activity_update(request, pk, activity_id):
 
 
 class ActivityDeleteView(LoginRequiredMixin, DeleteView):
-    template_name = 'activities/delete_activity.html'
-    success_url = reverse_lazy('activity_list')
+    model = Activity
+    template_name = 'activities/activity_delete.html'
+    form_class = modelform_factory(Activity, fields=['title', 'description'])
+    success_url = reverse_lazy('index')
 
     def get_queryset(self):
+        super().get_queryset()
         activity_id = self.kwargs['activity_id']
         queryset = Activity.objects.filter(pk=activity_id)
         return queryset
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        activity_id = self.kwargs['activity_id']
+        activity = Activity.objects.get(pk=activity_id)
         profile = self.request.user
         context['profile'] = profile
-        return context
+        context['pk'] = self.kwargs['pk']
+        context['activity'] = activity
 
-    # create form, because default views.DeleteView do not return deleted form
-    form_class = modelform_factory(Activity, fields=['title', 'description'])
+        return context
 
     # populate the form
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
         kwargs['instance'] = self.object
         return kwargs
+
+
+def delete_activity(request, pk, activity_id):
+    profile = Profile.objects.get(pk=pk)
+    activity = Activity.objects.get(pk=activity_id)
+
+    form = DeleteActivityForm(instance=profile)
+    if request.method == 'POST':
+        activity.delete()
+        return redirect('activity_list', pk=request.user.pk)
+
+    context = {
+        'profile': profile,
+        'activity': activity,
+        'pk': profile.pk,
+        'form': form,
+    }
+
+    return render(request, 'activities/activity_delete.html', context)

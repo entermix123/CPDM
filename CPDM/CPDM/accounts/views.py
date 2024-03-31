@@ -99,3 +99,10 @@ class DeleteUserView(LoginRequiredMixin, views.DeleteView):
     model = UserModel
     template_name = 'accounts/profile_delete.html'
     success_url = reverse_lazy('index')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        user = self.request.user
+        context['profile'] = user
+
+        return context
