@@ -10,6 +10,8 @@
     <h2>Hello {{ profile }}</h2>
     <h3><a href="{% url 'update_profile' pk=request.user.pk %}" class="custom-link">Edit Profile</a></h3>
     <br>
+    <h3><a href="{% url 'delete_profile' pk=request.user.pk %}" class="custom-link">Delete Profile</a></h3>
+    <br>
 
     <h2>Companies</h2>
     {% if companies_owned %}
