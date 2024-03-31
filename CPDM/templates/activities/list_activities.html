@@ -1,9 +1,13 @@
 {% extends 'base.html' %}
+{% load static %}
 
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/activity/list_activity.css' %}">
+{% endblock %}
 
 {% block content %}
     <h2>Hello {{ profile }}</h2>
-    <h3><a href="{% url 'activity_create' pk=request.user.pk %}">Create an Activity</a></h3>
+    <h3><a href="{% url 'activity_create' pk=request.user.pk %}" class="custom-link">Create an Activity</a></h3>
     <br>
 
     <div>
@@ -12,9 +16,16 @@
 
     {% if activity_list %}
         <h3>Activities count: {{ activity_list.count }}</h3>
+        {% for activity in activity_list %}
+            <h4>{{ activity }}</h4>
+            <!-- Include Bootstrap CSS -->
+
+            <!-- Button -->
+            <a href="{% url 'activity_details' activity_id=activity.id pk=request.user.pk %}" 
+               class="custom-link">Details Activity</a>
+        {% endfor %}
     {% else %}
         <h3>You don't have any activities yet.</h3>
-        <h3><a href="{% url 'activity_create' pk=request.user.pk %}">Create an Activity</a></h3>
     {% endif %}
-    
+
 {% endblock %}

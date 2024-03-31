@@ -15,7 +15,8 @@
             <li><a href="{% url 'index' %}">Home</a></li>
             <li><a href="#">Settings</a></li>
             <li><a href="{% url 'profile_details' pk=pk %}">Profile</a></li>
-            <li><a href="#">Companies</a></li>
+            <li><a href="{% url 'company_list' pk=request.user.pk %}">Companies</a></li>
+            <li><a href="{% url 'employees_list' pk=request.user.pk %}">Employees</a></li>
             <li><a href="{% url 'activity_list' pk=request.user.pk %}">Activities</a></li>
             <li><a href="{% url 'logout_user' pk=pk %}">Logout</a></li>
         </ul>

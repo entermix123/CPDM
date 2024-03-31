@@ -6,14 +6,13 @@
 {% endblock %}
 
 {% block content %}
-        <div class="container">
-        <h2>Create Activity Form</h2>
-        <form action="{% url 'activity_create' pk=request.user.pk %}" method="post">
+    <div class="container">
+        <h2>Create Employee</h2>
+        <form action="{% url 'employee_create' pk=request.user.pk %}" method="post">
             {{ form.as_p }}
-            <button type="submit">Create Activity</button>
+            <button type="submit">Create Employee</button>
 
             {% csrf_token %}
-            </form>
+        </form>
     </div>
 {% endblock %}
-

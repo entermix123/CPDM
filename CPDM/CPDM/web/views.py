@@ -10,6 +10,7 @@ def index(request):
 
     context = {
         'pk': pk,
+        'profile': user,
     }
 
     if user.is_anonymous:

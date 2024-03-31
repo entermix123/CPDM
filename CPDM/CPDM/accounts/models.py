@@ -10,7 +10,6 @@ from CPDM.accounts.managers import AccountUserManager
 from CPDM.mixins.model_mixins import CreatedUpdatedMixin
 
 
-# Auth data in this model
 class AccountsUser(CreatedUpdatedMixin, auth_models.AbstractBaseUser, auth_models.PermissionsMixin):
 
     email = models.EmailField(
@@ -66,7 +65,6 @@ class Profile(CreatedUpdatedMixin, models.Model):
                 message=f'Cannot have less than {MIN_FIRST_NAME_LENGTH} characters'
             ),
         ],
-        help_text="Field is required",
         blank=True,
         null=True,
     )
@@ -79,7 +77,6 @@ class Profile(CreatedUpdatedMixin, models.Model):
                 message=f'Cannot have less than {MIN_LAST_NAME_LENGTH} characters'
             ),
         ],
-        help_text="Field is required",
         blank=True,
         null=True,
     )

@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/accounts/profile_details.css' %}">
+{% endblock %}
+
+{% block content %}
+    <h2>Hello {{ profile }}</h2>
+    <br>
+
+    <h2>Activity</h2>
+    <h3>{{ activity.title }}</h3>
+    <br>
+    <br>
+    <a href="{% url 'activity_update' activity_id=activity.id pk=request.user.pk %}"
+       class="custom-link">Update Activity</a>            <br>
+    <br>
+    <a href="{% url 'activity_update' activity_id=activity.id pk=request.user.pk %}"
+       class="custom-link">Delete Activity</a>
+    <br>
+
+
+{% endblock %}

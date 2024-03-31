@@ -24,13 +24,12 @@ class Activity(CreatedUpdatedMixin, models.Model):
         unique=True,
         error_messages={'unique': 'Activity with this title already exists, Include department name in the title.\
          Example: "title"-"Department name"'},
-        help_text="Field is required.",
         blank=False,
         null=False,
     )
 
     description = models.TextField(
-        help_text='Field is required. Enter a brief description of the activity',
+        help_text='Enter a brief description of the activity',
         blank=False,
         null=False,
     )

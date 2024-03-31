@@ -40,7 +40,6 @@ class Company(models.Model):
         ],
         unique=True,
         error_messages={'unique': 'Company with this name already exists. Choose another one'},
-        help_text="Field is required",
         blank=False,
         null=False,
     )

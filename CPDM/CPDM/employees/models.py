@@ -63,15 +63,11 @@ class Employee(models.Model):
     department = models.ManyToManyField(
         Department,
         related_name='employees_departments',
-        blank=True,
-        null=True,
     )
 
     company = models.ManyToManyField(
         Company,
         related_name='employees_companies',
-        blank=True,
-        null=True,
     )
 
     company_owner = models.ForeignKey(

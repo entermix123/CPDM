@@ -7,10 +7,10 @@
 
 {% block content %}
         <div class="container">
-        <h2>Update Activity</h2>
-        <form action="{% url 'activity_update' pk=request.user.pk activity_id=activity.pk %}" method="post">
+        <h2>Create Company</h2>
+        <form action="{% url 'company_create' pk=request.user.pk %}" method="post">
             {{ form.as_p }}
-            <button type="submit">Save Changes</button>
+            <button type="submit">Create Company</button>
 
             {% csrf_token %}
             </form>

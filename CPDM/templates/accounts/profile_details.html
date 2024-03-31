@@ -1,35 +1,31 @@
 {% extends 'base.html' %}
+{% load static %}
 
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/activity/list_activity.css' %}">
+{% endblock %}
 
 {% block content %}
     <h2>Hello {{ profile }}</h2>
-    <h3><a href="#">Edit your Profile</a></h3>
+    <h3><a href="{% url 'update_profile' pk=request.user.pk %}" class="custom-link">Edit Profile</a></h3>
     <br>
+
     <h2>Companies</h2>
-    <h3><a href="#">Create a Company</a></h3>
+    <h3><a href="#" class="custom-link">Create a Company</a></h3>
 
     {% if companies_owned %}
-        <h3>Companies Owned: {{ companies_owned.count }}</h3>
         {% for company in companies_owned %}
             <h3>Company Name: {{ company }}</h3>
-            <h3>Company locations: {{ company.locations.count }}</h3>
-            <ul>
-                {% for location in company_locations %}
-                    <li>{{ location }}</li>
-                {% endfor %}
-            </ul>
         {% endfor %}
     {% else %}
         <h3>You don't own any companies yet.</h3>
     {% endif %}
-
     <div>
         <br>
     </div>
-
     <h2>Activities</h2>
-    <h3><a href="{% url 'activity_create' pk=request.user.pk %}">Create an Activity</a></h3>
-    <br>
+    <h3><a href="{% url 'activity_create' pk=request.user.pk %}" class="custom-link">Create an Activity</a></h3>
     {% if activities_owned %}
         <h3>Activities count: {{ activities_owned.count }}</h3>
     {% else %}

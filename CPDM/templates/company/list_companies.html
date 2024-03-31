@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/company/list_companies.css' %}">
+{% endblock %}
+
+{% block content %}
+    <h2>Hello {{ profile }}</h2>
+    <h3><a href="{% url 'company_create' pk=request.user.pk %}" class="custom-link">Create a new Company</a></h3>
+    <br>
+
+    <div>
+        <br>
+    </div>
+
+    {% if company_list %}
+        <h3>Total Companies: {{ company_list.count }}</h3>
+        {% for company in company_list %}
+            <h4>{{ company }}</h4>
+            <!-- Include Bootstrap CSS -->
+            
+            <!-- Button -->
+            <a href="{% url 'company_update' pk=company.pk %}" class="custom-link">Update Company</a>
+        {% endfor %}
+    {% else %}
+        <h3>You don't have any companies yet.</h3>
+    {% endif %}
+
+{% endblock %}

@@ -18,7 +18,6 @@ urlpatterns = [
         path('software/', include('CPDM.software.urls')),
         path('risk_matrix/', include('CPDM.risk_matrix.urls')),
     ])),
-
 ]
 
 # Serving static files during development

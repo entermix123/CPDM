@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    
+    <div class="container">
+        <h2>Edit Profile</h2>
+        <form action="{% url 'update_profile' pk=profile.pk %}" method="post">
+            {{ form.as_p }}
+            <button type="submit">Save</button>
+
+            {% csrf_token %}
+            </form>
+    </div>
+
+{% endblock %}

@@ -1,4 +1,3 @@
-from django import forms
 from django.contrib.auth import forms as auth_forms, get_user_model
 
 from CPDM.accounts.models import Profile
@@ -43,11 +42,3 @@ class AccountLoginForm(auth_forms.AuthenticationForm):
             {'placeholder': 'Email'})                   # Add placeholder
         self.fields['password'].widget.attrs.update(
             {'placeholder': 'Password'})                # Add placeholder
-
-
-class ProfileChangeForm(auth_forms.UserChangeForm):
-    class Meta(auth_forms.UserChangeForm.Meta):
-        model = Profile
-        fields = '__all__'
-        exclude = ['user']
-

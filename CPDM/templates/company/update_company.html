@@ -7,8 +7,8 @@
 
 {% block content %}
         <div class="container">
-        <h2>Update Activity</h2>
-        <form action="{% url 'activity_update' pk=request.user.pk activity_id=activity.pk %}" method="post">
+        <h2>Update Company</h2>
+        <form action="{% url 'company_update' pk=request.user.pk %}" method="post">
             {{ form.as_p }}
             <button type="submit">Save Changes</button>
 

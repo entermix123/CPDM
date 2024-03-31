@@ -19,17 +19,11 @@ class LoginUserView(views.View):
         }
         return render(request, 'accounts/login.html', context)
 
-    # overwrite post() method and set the username and password in the request and authenticate()
     def post(self, request, *args, **kwargs):
-        # form = self.form_class(request.POST or None)
-        # if form.is_valid():
         email, password = request.POST['username'], request.POST['password']
-
         user = authenticate(username=email, password=password)
-        # print(user)
 
         if user is not None:
-            # add user to session
             login(request, user)
 
         return redirect('index')
@@ -40,12 +34,33 @@ class RegisterUserView(views.CreateView):
     template_name = 'accounts/register.html'       # choose template
     success_url = reverse_lazy('index')
 
+# dan@dan.com
+# 123
 
-# superuser:    Danioo
-# Password:     DanDan123
 
-# email:    dan@dan.com
-# Password: 123
+class UpdateProfileView(LoginRequiredMixin, views.UpdateView):
+    fields = ['first_name', 'last_name']
+    success_url = reverse_lazy('index')
+    template_name = 'accounts/profile_update.html'
+
+    def get_queryset(self):
+        user_pk = self.request.user.pk
+        queryset = Profile.objects.filter(pk=user_pk)
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        profile = self.request.user
+        context['profile'] = profile
+        return context
+
+    def form_valid(self, form):
+        form.instance.user_id = self.request.user.pk
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse_lazy('profile_details', kwargs={'pk': self.request.user.pk})
+
 
 @login_required
 def logout_view(request, pk):
@@ -65,4 +80,3 @@ class ProfileDetailView(LoginRequiredMixin, views.DetailView):
         context['activities_owned'] = user.activities.all()
 
         return context
-

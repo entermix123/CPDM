@@ -42,15 +42,11 @@ class Department(CreatedUpdatedMixin, models.Model):
 
     activities = models.ManyToManyField(
         Activity,
-        blank=True,
-        null=True,
         related_name='departments_in_activity'
     )
 
     processes = models.ManyToManyField(
         Process,
-        blank=True,
-        null=True,
         related_name='departments_in_process'
     )
 

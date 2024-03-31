@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/employees/list_employees.css' %}">
+{% endblock %}
+
+{% block content %}
+        <h2>Hello {{ profile }}</h2>
+    <br>
+
+    <div>
+        <br>
+    </div>
+
+    {% if employee_list %}
+        <h3>Employees count: {{ employee_list.count }}</h3>
+    {% else %}
+        <h3>You don't have any employees yet.</h3>
+        <h3><a href="{% url 'employee_create' pk=request.user.pk %}" class="custom-link">Create Employee</a></h3>
+    {% endif %}
+{% endblock %}

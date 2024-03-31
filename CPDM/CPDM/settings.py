@@ -153,7 +153,7 @@ MEDIA_ROOT = [
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-LOGIN_URL = reverse_lazy('login-user')
+LOGIN_URL = reverse_lazy('login_user')
 LOGIN_REDIRECT_URL = reverse_lazy('index')
 
 AUTH_USER_MODEL = 'accounts.AccountsUser'
