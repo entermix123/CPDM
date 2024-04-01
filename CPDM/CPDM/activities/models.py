@@ -29,7 +29,6 @@ class Activity(CreatedUpdatedMixin, models.Model):
     )
 
     description = models.TextField(
-        help_text='Enter a brief description of the activity',
         blank=False,
         null=False,
     )

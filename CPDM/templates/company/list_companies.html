@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block extra_css %}
-    <link rel="stylesheet" href="{% static 'css/company/list_companies.css' %}">
+    <link rel="stylesheet" href="{% static 'css/activity/list_activity.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -21,7 +21,7 @@
             <!-- Include Bootstrap CSS -->
             
             <!-- Button -->
-            <a href="{% url 'company_update' pk=company.pk %}" class="custom-link">Update Company</a>
+            <a href="{% url 'company_details' pk=company.pk company_id=company.id %}" class="custom-link">Details</a>
         {% endfor %}
     {% else %}
         <h3>You don't have any companies yet.</h3>

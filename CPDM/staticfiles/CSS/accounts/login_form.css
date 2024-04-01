@@ -1,4 +1,4 @@
-/* Login Styles */
+/* Registration Styles */
 
 body {
     display: flex;
@@ -7,7 +7,6 @@ body {
     height: 100vh;
     background-size: cover;
     background-repeat: no-repeat;
-    font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
 }
@@ -43,14 +42,27 @@ body {
 /*    margin-top: 40px; !* Adjust margin as needed *!*/
 /*}*/
 
+.custom-link {
+    color: #bedebb;
+}
+
 /* Form Container */
-.container {
+.form-container {
   max-width: 400px;
   margin: 0 auto;
   background-color: #2d2b2b;
   padding: 30px;
   border-radius: 5px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+form .error li {
+  color: #fff;
+  /* ... */
+}
+
+.error-message{
+    color: white;
 }
 
 /* Form Heading */
@@ -60,8 +72,12 @@ body {
   color: #fff;
 }
 
+ul {
+    color: white;
+}
+
 /* Form Inputs */
-input[type="text"],
+input[type="email"],
 input[type="password"] {
   width: 100%;
   padding: 10px;

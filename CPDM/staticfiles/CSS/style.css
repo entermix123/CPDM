@@ -1,0 +1,78 @@
+/* Base Styles */
+body {
+    display: flex;
+    flex-direction: column; /* Align items vertically */
+    justify-content: space-between; /* Ensure footer is at the bottom */
+    min-height: 100vh; /* Ensure body fills the viewport height */
+    background-image: url('images/background/7.jpg'); /* Adjust the path based on your directory structure */
+    background-size: cover; /* Cover the entire background */
+    background-repeat: no-repeat; /* No repeating of the image */
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.content {
+    flex-grow: 1; /* Grow to fill remaining space */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+label {
+    color: #fff;
+}
+
+h2, h3, h4 {
+    color: #fff;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.navigation {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #333; /* Adjust styling as needed */
+    z-index: 1000; /* Set a high z-index value to ensure it's always on top */
+    padding: 10px 0; /* Adjust padding as needed */
+}
+
+.navigation ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.navigation ul li {
+    display: inline;
+}
+
+.navigation ul li a {
+    color: #fff;
+    text-decoration: none;
+    padding: 0 10px; /* Adjust padding as needed */
+}
+
+/* Footer */
+footer {
+    background-color: #2d2b2b; /* Footer background color */
+    color: #f8f6f6; /* Footer text color */
+    text-align: center;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+ul.errorlist.nonfield {
+    color: white;
+}
+
+ul.errorlist {
+    color: white;
+}
+
+.custom-link {
+    color: #bedebb;
+}

@@ -1,4 +1,8 @@
+from django import forms
 from django.contrib.auth import forms as auth_forms, get_user_model
+from django.contrib.auth.forms import UsernameField
+from django.core.exceptions import ValidationError
+from django.utils.translation import gettext_lazy as _
 
 from CPDM.accounts.models import Profile
 
@@ -34,7 +38,21 @@ class AccountUserCreationForm(auth_forms.UserCreationForm):
         return user
 
 
+class AccountUserChangeForm(auth_forms.UserChangeForm):
+    class Meta(auth_forms.UserChangeForm.Meta):
+        model = UserModel
+        fields = (UserModel.USERNAME_FIELD,)
+
+
 class AccountLoginForm(auth_forms.AuthenticationForm):
+
+    error_messages = {
+        "invalid_login": _(
+            "Please enter a correct %(username)s and password."
+        ),
+        "inactive": _("This account is inactive."),
+    }
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['username'].label = 'Email'         # Change the field label
@@ -42,3 +60,10 @@ class AccountLoginForm(auth_forms.AuthenticationForm):
             {'placeholder': 'Email'})                   # Add placeholder
         self.fields['password'].widget.attrs.update(
             {'placeholder': 'Password'})                # Add placeholder
+
+    def get_invalid_login_error(self):
+        return ValidationError(
+            self.error_messages["invalid_login"],
+            code="invalid_login",
+            params={"username": self.username_field.verbose_name},
+        )

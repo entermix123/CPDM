@@ -1,6 +1,10 @@
+from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout, get_user_model
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.views import LoginView
+
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views import generic as views
@@ -12,8 +16,9 @@ from CPDM.accounts.models import Profile
 UserModel = get_user_model()
 
 
-class LoginUserView(views.View):
+class LoginUserView(LoginView):
     form_class = AccountLoginForm   # use django auth form
+    template_name = 'accounts/login.html'
 
     # overwrite get() method and set the form in the context
     def get(self, request, *args, **kwargs):
@@ -22,14 +27,17 @@ class LoginUserView(views.View):
         }
         return render(request, 'accounts/login.html', context)
 
-    def post(self, request, *args, **kwargs):
-        email, password = request.POST['username'], request.POST['password']
-        user = authenticate(username=email, password=password)
+    def form_valid(self, form):
+        email = form.cleaned_data.get('username')
+        password = form.cleaned_data.get('password')
+        user = authenticate(email=email, password=password)
 
         if user is not None:
-            login(request, user)
-
-        return redirect('index')
+            login(self.request, user)
+            return redirect('index')
+        else:
+            messages.error(self.request, 'Invalid email or password.')
+            return self.form_invalid(form)
 
 
 class RegisterUserView(views.CreateView):
@@ -93,6 +101,9 @@ class ProfileDetailView(LoginRequiredMixin, views.DetailView):
         context['activities_owned'] = user.activities.all()
 
         return context
+
+    def get_success_url(self):
+        return reverse_lazy('profile_details', kwargs={'pk': self.request.user.pk})
 
 
 class DeleteUserView(LoginRequiredMixin, views.DeleteView):

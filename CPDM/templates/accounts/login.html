@@ -9,15 +9,16 @@
 {% endblock %}
 
 {% block content %}
-    <div class="container">
-        <div class="content">
-            <h2>Login</h2>
-            <form action="{% url 'login_user' %}?next={{ next }}" method="post">
-                {{ form }}
-                {% csrf_token %}
-                <button type="submit">Login</button>
-            </form>
-        </div>
+
+    <div class="form-content">
+        <h2>Login</h2>
+        <form action="{% url 'login_user' %}" method="post">
+            {{ form }}
+            <button type="submit">Login</button>
+
+            {% csrf_token %}
+        </form>
     </div>
+
 {% endblock %}
 

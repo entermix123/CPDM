@@ -1,9 +1,13 @@
 {% extends 'base.html' %}
+{% load static %}
 
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/form_style.css' %}">
+{% endblock %}
 
 {% block content %}
     <div class="container">
-        <h2>Delete Profile</h2>
+        <h2>Sorry to see you go</h2>
         <form action="{% url 'delete_profile' pk=request.user.pk %}" method="post">
             {{ form.as_p }}
             <button type="submit">Delete Profile</button>

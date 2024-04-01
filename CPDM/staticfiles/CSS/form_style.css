@@ -48,18 +48,13 @@ body {
 }
 
 /* Form Container */
-.form-container {
+.container {
   max-width: 400px;
   margin: 0 auto;
   background-color: #2d2b2b;
   padding: 30px;
   border-radius: 5px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-}
-
-form .error li {
-  color: #fff;
-  /* ... */
 }
 
 /* Form Heading */
@@ -101,8 +96,4 @@ input[type="submit"] {
 .error-message {
   color: #ff4444;
   margin-bottom: 10px;
-}
-
-ul.errorlist.nonfield {
-    color: white;
 }

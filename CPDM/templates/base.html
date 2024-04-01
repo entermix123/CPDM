@@ -6,8 +6,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Django Project</title>
-    <link rel="stylesheet" type="text/css" href="{% static 'CSS/web/style.css' %}">
+    <title>Company Management</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'CSS/style.css' %}">
+
     {% block extra_css %}{% endblock %}
 </head>
 <body>
@@ -18,9 +19,15 @@
             <li><a href="#">Settings</a></li>
             <li><a href="{% url 'profile_details' pk=request.user.pk %}">Profile</a></li>
             <li><a href="{% url 'company_list' pk=request.user.pk %}">Companies</a></li>
-            <li><a href="#">Departments</a></li>
             <li><a href="{% url 'employees_list' pk=request.user.pk %}">Employees</a></li>
             <li><a href="{% url 'activity_list' pk=request.user.pk %}">Activities</a></li>
+            <li><a href="#">Departments</a></li>
+            <li><a href="#">Employees</a></li>
+            <li><a href="#">Instructions</a></li>
+            <li><a href="#">Processes</a></li>
+            <li><a href="#">Procedures</a></li>
+            <li><a href="#">Software</a></li>
+            <li><a href="#">Risks</a></li>
             <li><a href="{% url 'logout_user' pk=request.user.pk %}">Logout</a></li>
         {% else %}
             <li><a href="{% url 'about' %}">About</a></li>

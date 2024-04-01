@@ -1,6 +1,6 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.forms import modelform_factory
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect, render, get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, ListView, UpdateView, DetailView, DeleteView
 
@@ -36,17 +36,17 @@ class CreateActivityView(LoginRequiredMixin, CreateView):
 class UpdateActivityView(LoginRequiredMixin, UpdateView):
     form_class = ActivityUpdateForm
     template_name = 'activities/update_activity.html'
-    success_url = reverse_lazy('activity_list')
 
-    def get_queryset(self):
-        activity_id = self.kwargs['activity_id']
-        queryset = Activity.objects.filter(id=activity_id)
-        return queryset
+    def get_object(self):
+        obj = get_object_or_404(Activity, pk=self.kwargs.get('activity_id'))
+        return obj
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         profile = self.request.user
+        activity_id = self.kwargs['activity_id']
         context['profile'] = profile
+        context['activity_id'] = activity_id
         return context
 
     def form_valid(self, form):
@@ -73,15 +73,20 @@ class ListActivityView(LoginRequiredMixin, ListView):
 
 
 class DetailsActivityView(LoginRequiredMixin, DetailView):
-    model = Activity
     template_name = 'activities/activity_details.html'
-    context_object_name = 'activity'
+
+    def get_object(self):
+        obj = get_object_or_404(Activity, pk=self.kwargs.get('activity_id'))
+        return obj
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['profile'] = self.request.user
-        context['activity'] = self.object
+
         return context
+
+    def get_success_url(self):
+        return reverse_lazy('activity_list', kwargs={'pk': self.request.user.pk})
 
 
 def activity_details(request, pk, activity_id):
@@ -123,27 +128,20 @@ def activity_update(request, pk, activity_id):
 
 
 class ActivityDeleteView(LoginRequiredMixin, DeleteView):
-    model = Activity
+    form_class = DeleteActivityForm
     template_name = 'activities/activity_delete.html'
-    form_class = modelform_factory(Activity, fields=['title', 'description'])
-    success_url = reverse_lazy('index')
-
-    def get_queryset(self):
-        super().get_queryset()
-        activity_id = self.kwargs['activity_id']
-        queryset = Activity.objects.filter(pk=activity_id)
-        return queryset
+    form_class.base_fields['title'].disabled = True
+    form_class.base_fields['description'].disabled = True
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        activity_id = self.kwargs['activity_id']
-        activity = Activity.objects.get(pk=activity_id)
-        profile = self.request.user
+        profile = Profile.objects.get(pk=self.request.user.pk)
         context['profile'] = profile
-        context['pk'] = self.kwargs['pk']
-        context['activity'] = activity
-
         return context
+
+    def get_object(self):
+        obj = get_object_or_404(Activity, pk=self.kwargs.get('activity_id'))
+        return obj
 
     # populate the form
     def get_form_kwargs(self):
@@ -151,20 +149,23 @@ class ActivityDeleteView(LoginRequiredMixin, DeleteView):
         kwargs['instance'] = self.object
         return kwargs
 
+    def get_success_url(self):
+        return reverse_lazy('activity_list', kwargs={'pk': self.request.user.pk})
+
 
 def delete_activity(request, pk, activity_id):
     profile = Profile.objects.get(pk=pk)
     activity = Activity.objects.get(pk=activity_id)
 
-    form = DeleteActivityForm(instance=profile)
+    form = DeleteActivityForm(instance=activity)
     if request.method == 'POST':
+
         activity.delete()
         return redirect('activity_list', pk=request.user.pk)
 
     context = {
         'profile': profile,
         'activity': activity,
-        'pk': profile.pk,
         'form': form,
     }
 

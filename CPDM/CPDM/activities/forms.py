@@ -16,6 +16,7 @@ class ActivityUpdateForm(forms.ModelForm):
 
 
 class DeleteActivityForm(forms.ModelForm):
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         for (_, field) in self.fields.items():
@@ -24,4 +25,4 @@ class DeleteActivityForm(forms.ModelForm):
 
     class Meta:
         model = Activity
-        fields = ()
+        fields = ('title', 'description')
