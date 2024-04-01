@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/accounts/registration_form.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h2>Delete Company</h2>
+        <form action="{% url 'company_delete' pk=request.user.pk company_id=company.pk %}" method="post">
+            {{ form.as_p }}
+            <button type="submit">Delete Company</button>
+
+            {% csrf_token %}
+        </form>
+    </div>
+{% endblock %}
