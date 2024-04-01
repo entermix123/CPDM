@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/form_style.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="form-container">
+        <h2>Delete Process</h2>
+        <form action="{% url 'process_delete' pk=request.user.pk process_id=process.pk %}" method="post">
+            {{ form.as_p }}
+            <button type="submit">Delete Process</button>
+
+            {% csrf_token %}
+        </form>
+    </div>
+{% endblock %}

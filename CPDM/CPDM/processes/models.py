@@ -1,9 +1,12 @@
+from django.contrib.auth import get_user_model
 from django.core.validators import MinLengthValidator
 from django.db import models
 
 from CPDM.accounts.models import Profile
 from CPDM.activities.models import Activity
 from CPDM.mixins.model_mixins import CreatedUpdatedMixin
+
+UserModel = get_user_model()
 
 
 class Process(CreatedUpdatedMixin, models.Model):
@@ -34,7 +37,7 @@ class Process(CreatedUpdatedMixin, models.Model):
     )
 
     owner = models.ForeignKey(
-        Profile,
+        UserModel,
         on_delete=models.CASCADE,
         related_name="processes"
     )

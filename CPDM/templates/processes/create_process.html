@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/company/create_company.css' %}">
+{% endblock %}
+
+{% block content %}
+        <div class="container">
+        <h2>Create Process</h2>
+        <form action="{% url 'process_create' pk=request.user.pk %}" method="post">
+            {{ form.as_p }}
+            <button type="submit">Create Process</button>
+
+            {% csrf_token %}
+            </form>
+    </div>
+{% endblock %}
+

@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/activity/list_activity.css' %}">
+{% endblock %}
+
+{% block content %}
+    <h2>Hello {{ profile }}</h2>
+    <h3><a href="{% url 'department_create' pk=request.user.pk %}" class="custom-link">Create Department</a></h3>
+    <br>
+
+    <div>
+        <br>
+    </div>
+
+    {% if department_list %}
+        <h3>Total Departments: {{ department_list.count }}</h3>
+        {% for department in department_list %}
+            <h4>{{ department }}</h4>
+            <!-- Include Bootstrap CSS -->
+            
+            <!-- Button -->
+            <a href="{% url 'department_details' pk=company.pk department_id=department.id %}"
+               class="custom-link">Details</a>
+        {% endfor %}
+    {% else %}
+        <h3>You don't have any departments yet.</h3>
+    {% endif %}
+
+{% endblock %}
