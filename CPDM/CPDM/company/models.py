@@ -21,7 +21,7 @@ class Company(models.Model):
     MAX_LENGTH_INDUSTRY = 100
     MAX_LENGTH_WEBSITE = 100
 
-    MAX_TYPE_LENGTH = 10
+    MAX_TYPE_LENGTH = max(len(choice[1]) for choice in CompanyType.choices)
 
     type = models.CharField(
         max_length=MAX_TYPE_LENGTH,

@@ -1,13 +1,13 @@
 {% extends 'base.html' %}
 {% load static %}
 
-
 {% block extra_css %}
-    <link rel="stylesheet" href="{% static 'css/employees/list_employees.css' %}">
+    <link rel="stylesheet" href="{% static 'css/list_style.css' %}">
 {% endblock %}
 
 {% block content %}
-        <h2>Hello {{ profile }}</h2>
+    <h2>Hello {{ profile }}</h2>
+    <h3><a href="{% url 'employee_create' pk=request.user.pk %}" class="custom-link">Create Employee</a></h3>
     <br>
 
     <div>
@@ -15,9 +15,17 @@
     </div>
 
     {% if employee_list %}
-        <h3>Employees count: {{ employee_list.count }}</h3>
+        <h3>Total Employees: {{ employee_list.count }}</h3>
+        {% for employee in employee_list %}
+            <h4>{{ employee }}</h4>
+            <!-- Include Bootstrap CSS -->
+            
+            <!-- Button -->
+            <h4><a href="{% url 'employee_details' pk=request.user.pk employee_id=employee.id %}"
+               class="custom-link">Details</a></h4>
+        {% endfor %}
     {% else %}
         <h3>You don't have any employees yet.</h3>
-        <h3><a href="{% url 'employee_create' pk=request.user.pk %}" class="custom-link">Create Employee</a></h3>
     {% endif %}
+
 {% endblock %}

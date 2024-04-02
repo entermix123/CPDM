@@ -42,7 +42,8 @@ class CompanyListView(LoginRequiredMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['profile'] = self.request.user
+        profile = Profile.objects.get(pk=self.request.user.pk)
+        context['profile'] = profile
         return context
 
 

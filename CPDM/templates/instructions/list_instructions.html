@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/list_style.css' %}">
+{% endblock %}
+
+{% block content %}
+    <h2>Hello {{ profile }}</h2>
+    <h3><a href="{% url 'instruction_create' pk=request.user.pk %}" class="custom-link">Create Instruction</a></h3>
+    <br>
+
+    <div>
+        <br>
+    </div>
+
+    {% if instruction_list %}
+        <h3>Total Instructions: {{ instruction_list.count }}</h3>
+        {% for instruction in instruction_list %}
+            <h4>{{ instruction }}</h4>
+            <!-- Include Bootstrap CSS -->
+            
+            <!-- Button -->
+            <a href="{% url 'instruction_details' pk=request.user.pk instruction_id=instruction.id %}"
+               class="custom-link">Details</a>
+        {% endfor %}
+    {% else %}
+        <h3>You don't have any Instructions yet.</h3>
+    {% endif %}
+
+{% endblock %}

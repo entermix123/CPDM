@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block extra_css %}
-    <link rel="stylesheet" href="{% static 'css/activity/list_activity.css' %}">
+    <link rel="stylesheet" href="{% static 'css/list_style.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -21,8 +21,8 @@
             <!-- Include Bootstrap CSS -->
             
             <!-- Button -->
-            <a href="{% url 'department_details' pk=request.user.pk department_id=department.id %}"
-               class="custom-link">Details</a>
+            <h4><a href="{% url 'department_details' pk=request.user.pk department_id=department.id %}"
+               class="custom-link">Details</a></h4>
         {% endfor %}
     {% else %}
         <h3>You don't have any departments yet.</h3>

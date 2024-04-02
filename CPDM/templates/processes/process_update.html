@@ -6,7 +6,7 @@
 {% endblock %}
 
 {% block content %}
-        <div class="form-container">
+        <div class="container">
         <h2>Update Process</h2>
         <form action="{% url 'process_update' pk=request.user.pk process_id=process.id %}" method="post">
             {{ form.as_p }}

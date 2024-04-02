@@ -1,8 +1,11 @@
+from django.contrib.auth import get_user_model
 from django.core.validators import MinLengthValidator
 from django.db import models
 
 from CPDM.mixins.model_mixins import CreatedUpdatedMixin
 from CPDM.procedures.models import Procedure
+
+UserModel = get_user_model()
 
 
 class Instruction(CreatedUpdatedMixin, models.Model):
@@ -32,17 +35,24 @@ class Instruction(CreatedUpdatedMixin, models.Model):
         related_name="instructions"
     )
 
+    owner = models.ForeignKey(
+        UserModel,
+        on_delete=models.CASCADE,
+    )
+
 
 class InstructionStep(models.Model):
 
     class StepTypes(models.TextChoices):
+        START_BLOCK = 'START_BLOCK',
         EXECUTE = 'EXECUTE',
         IF_BLOCK = 'IF_BLOCK',
         TO_PROCESS = 'TO_PROCESS',
         END_BLOCK = 'END_BLOCK'
 
-    MAX_STEP_NAME_LENGTH = 20
-    MAX_STEP_TYPE_LENGTH = 10
+    MAX_STEP_NAME_LENGTH = max(len(choice[1]) for choice in StepTypes.choices)
+    MAX_STEP_TYPE_LENGTH = max(len(choice[1]) for choice in StepTypes.choices)
+    MAX_STEP_TEXT_LENGTH = max(len(choice[1]) for choice in StepTypes.choices)
 
     number = models.PositiveIntegerField()
 
@@ -61,7 +71,7 @@ class InstructionStep(models.Model):
     )
 
     step_text = models.CharField(           # OPTION FOR FAST BUILD THE INSTRUCTION
-        max_length=MAX_STEP_TYPE_LENGTH,
+        max_length=MAX_STEP_TEXT_LENGTH,
         choices=StepTypes.choices,
     )
 

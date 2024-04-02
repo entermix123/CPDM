@@ -53,8 +53,7 @@ class ProcessStep(models.Model):
         TO_PROCESS = 'TO_PROCESS',
         END_BLOCK = 'END_BLOCK'
 
-    MAX_STEP_NAME_LENGTH = 20
-    MAX_STEP_TYPE_LENGTH = 10
+    MAX_STEP_TYPE_LENGTH = max(len(choice[1]) for choice in StepTypes.choices)
 
     number = models.PositiveIntegerField()
 
@@ -63,11 +62,7 @@ class ProcessStep(models.Model):
         choices=StepTypes.choices,
     )
 
-    step_label = models.CharField(
-        max_length=MAX_STEP_NAME_LENGTH,
-    )
-
-    step_text = models.CharField(  # OPTION FOR FAST BUILD THE INSTRUCTION
+    step_label = models.CharField(  # OPTION FOR FAST BUILD THE INSTRUCTION
         max_length=MAX_STEP_TYPE_LENGTH,
         choices=StepTypes.choices,
     )

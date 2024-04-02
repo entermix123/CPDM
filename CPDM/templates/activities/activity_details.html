@@ -3,7 +3,7 @@
 
 
 {% block extra_css %}
-    <link rel="stylesheet" href="{% static 'css/accounts/profile_details.css' %}">
+    <link rel="stylesheet" href="{% static 'css/list_style.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -14,11 +14,12 @@
     <h3>{{ activity.title }}</h3>
     <br>
     <br>
-    <a href="{% url 'activity_update' activity_id=activity.id pk=request.user.pk %}"
-       class="custom-link">Update Activity</a>            <br>
+    <h4><a href="{% url 'activity_update' activity_id=activity.id pk=request.user.pk %}"
+       class="custom-link">Update Activity</a></h4>  
     <br>
-    <a href="{% url 'activity_delete' activity_id=activity.id pk=request.user.pk %}"
-       class="custom-link">Delete Activity</a>
+    <br>
+    <h4><a href="{% url 'activity_delete' activity_id=activity.id pk=request.user.pk %}"
+       class="custom-link">Delete Activity</a></h4>
     <br>
 
 

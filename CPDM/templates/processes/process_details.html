@@ -14,12 +14,12 @@
     <h3>{{ process.name }}</h3>
     <br>
     <br>
-    <a href="{% url 'process_update' process_id=process.id pk=request.user.pk %}"
-       class="custom-link">Update Process</a>          
+    <h4><a href="{% url 'process_update' process_id=process.id pk=request.user.pk %}"
+       class="custom-link">Update Process</a></h4>
     <br>
     <br>
-    <a href="{% url 'process_delete' process_id=process.id pk=request.user.pk %}"
-       class="custom-link">Delete Process</a>
+    <h4><a href="{% url 'process_delete' process_id=process.id pk=request.user.pk %}"
+       class="custom-link">Delete Process</a></h4>
     <br>
 
 

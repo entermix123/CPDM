@@ -88,6 +88,31 @@ class DetailsDepartmentView(LoginRequiredMixin, DetailView):
         return reverse_lazy('activity_list', kwargs={'pk': self.request.user.pk})
 
 
+class DeleteDepartmentView(LoginRequiredMixin, DeleteView):
+    form_class = DeleteDepartmentForm
+    template_name = 'departments/delete_department.html'
+    form_class.base_fields['name'].disabled = True
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        profile = Profile.objects.get(pk=self.request.user.pk)
+        context['profile'] = profile
+        return context
+
+    def get_object(self):
+        obj = get_object_or_404(Department, pk=self.kwargs.get('department_id'))
+        return obj
+
+    # populate the form
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['instance'] = self.object
+        return kwargs
+
+    def get_success_url(self):
+        return reverse_lazy('departments_list', kwargs={'pk': self.request.user.pk})
+
+
 def department_details(request, pk, department_id):
     profile = Profile.objects.get(pk=request.user.pk)
     department = Department.objects.get(pk=department_id)
@@ -124,31 +149,6 @@ def department_update(request, pk, department_id):
         'form': form,
     }
     return render(request, 'departments/department_update.html', context)
-
-
-class DeleteDepartmentView(LoginRequiredMixin, DeleteView):
-    form_class = DeleteDepartmentForm
-    template_name = 'departments/delete_department.html'
-    form_class.base_fields['name'].disabled = True
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        profile = Profile.objects.get(pk=self.request.user.pk)
-        context['profile'] = profile
-        return context
-
-    def get_object(self):
-        obj = get_object_or_404(Department, pk=self.kwargs.get('department_id'))
-        return obj
-
-    # populate the form
-    def get_form_kwargs(self):
-        kwargs = super().get_form_kwargs()
-        kwargs['instance'] = self.object
-        return kwargs
-
-    def get_success_url(self):
-        return reverse_lazy('departments_list', kwargs={'pk': self.request.user.pk})
 
 
 def delete_activity(request, pk, department_id):

@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/company/create_company.css' %}">
+{% endblock %}
+
+{% block content %}
+        <div class="container">
+        <h2>Update Employee</h2>
+        <form action="{% url 'update_employee' pk=request.user.pk employee_id=employee.id %}" method="post">
+            {{ form.as_p }}
+            <button type="submit">Save Changes</button>
+
+            {% csrf_token %}
+            </form>
+    </div>
+{% endblock %}
+

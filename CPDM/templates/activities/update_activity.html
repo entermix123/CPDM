@@ -2,18 +2,18 @@
 {% load static %}
 
 {% block extra_css %}
-    <link rel="stylesheet" href="{% static 'css/company/create_company.css' %}">
+    <link rel="stylesheet" href="{% static 'css/forms/form_style.css' %}">
 {% endblock %}
 
 {% block content %}
-        <div class="form-container">
+    <div class="container">
         <h2>Update Activity</h2>
         <form action="{% url 'activity_update' pk=request.user.pk activity_id=activity.pk %}" method="post">
             {{ form.as_p }}
             <button type="submit">Save Changes</button>
 
             {% csrf_token %}
-            </form>
+        </form>
     </div>
 {% endblock %}
 

@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/list_style.css' %}">
+{% endblock %}
+
+{% block content %}
+    <h2>Hello {{ profile }}</h2>
+    <h3><a href="{% url 'process_create' pk=request.user.pk %}" class="custom-link">Create Process</a></h3>
+
+    <div>
+        <br>
+    </div>
+
+    {% if procedure_list %}
+        <h3>Total Procedures: {{ procedure_list.count }}</h3>
+        {% for procedure in procedure_list %}
+            <h4>{{ procedure }}</h4>
+            <!-- Include Bootstrap CSS -->
+
+            <!-- Button -->
+            <h4><a href="{% url 'procedure_details' pk=request.user.pk procedure_id=procedure.id %}"
+                        class="custom-link">Details</a></h4>
+        {% endfor %}
+    {% else %}
+        <h3>You don't have any processes yet.</h3>
+    {% endif %}
+
+{% endblock %}

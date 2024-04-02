@@ -57,6 +57,10 @@ body {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
 
+span#id_description_helptext {
+    color: #f8f6f6;
+}
+
 /* Form Heading */
 .h2 {
   text-align: center;

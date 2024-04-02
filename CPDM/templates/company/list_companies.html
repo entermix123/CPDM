@@ -21,7 +21,8 @@
             <!-- Include Bootstrap CSS -->
             
             <!-- Button -->
-            <a href="{% url 'company_details' pk=company.pk company_id=company.id %}" class="custom-link">Details</a>
+            <h4><a href="{% url 'company_details' pk=company.pk company_id=company.id %}" 
+                   class="custom-link">Details</a></h4>
         {% endfor %}
     {% else %}
         <h3>You don't have any companies yet.</h3>

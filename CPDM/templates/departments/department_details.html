@@ -3,23 +3,22 @@
 
 
 {% block extra_css %}
-    <link rel="stylesheet" href="{% static 'CSS/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/list_style.css' %}">
 {% endblock %}
 
 {% block content %}
     <h2>Hello {{ profile }}</h2>
-    <br>
 
     <h2>Department</h2>
     <h3>{{ department.name }}</h3>
     <br>
     <br>
-    <a href="{% url 'department_update' department_id=department.id pk=request.user.pk %}"
-       class="custom-link">Update Department</a>          
+    <h4><a href="{% url 'department_update' department_id=department.id pk=request.user.pk %}"
+       class="custom-link">Update Department</a></h4>       
     <br>
     <br>
-    <a href="{% url 'department_delete' department_id=department.id pk=request.user.pk %}"
-       class="custom-link">Delete Department</a>
+    <h4><a href="{% url 'department_delete' department_id=department.id pk=request.user.pk %}"
+       class="custom-link">Delete Department</a></h4>
     <br>
 
 

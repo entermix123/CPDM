@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/accounts/profile_details.css' %}">
+{% endblock %}
+
+{% block content %}
+    <h2>Hello {{ profile }}</h2>
+    <br>
+
+    <h2>Employee</h2>
+    <h3>{{ employee.name }}</h3>
+    <br>
+    <br>
+    <h4><a href="{% url 'update_employee' pk=request.user.pk employee_id=employee.id %}"
+       class="custom-link">Update Employee</a></h4>
+    <br>
+    <br>
+    <h4><a href="{% url 'delete_employee' pk=request.user.pk employee_id=employee.id %}"
+       class="custom-link">Delete Employee</a></h4>
+    <br>
+
+
+{% endblock %}

@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/forms/form_style.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h2>Create Procedure</h2>
+        <form action="{% url 'procedure_create' pk=request.user.pk %}" method="post">
+            {{ form.as_p }}
+            <button type="submit">Create Procedure</button>
+
+            {% csrf_token %}
+        </form>
+    </div>
+{% endblock %}
+

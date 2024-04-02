@@ -52,7 +52,6 @@ class Employee(models.Model):
         ],
         blank=True,
         null=True,
-        help_text="Enter seniority and position"
     )
 
     salary = models.PositiveIntegerField(
