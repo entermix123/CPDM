@@ -37,15 +37,15 @@ class UpdateDepartmentView(LoginRequiredMixin, UpdateView):
     template_name = 'departments/department_update.html'
 
     def get_object(self):
-        obj = get_object_or_404(Department, pk=self.kwargs.get('activity_id'))
+        obj = get_object_or_404(Department, pk=self.kwargs.get('department_id'))
         return obj
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         profile = self.request.user
-        activity_id = self.kwargs['activity_id']
+        department_id = self.kwargs['department_id']
         context['profile'] = profile
-        context['activity_id'] = activity_id
+        context['department_id'] = department_id
         return context
 
     def form_valid(self, form):
@@ -53,7 +53,7 @@ class UpdateDepartmentView(LoginRequiredMixin, UpdateView):
         return super().form_valid(form)
 
     def get_success_url(self):
-        return reverse_lazy('activity_list', kwargs={'pk': self.request.user.pk})
+        return reverse_lazy('departments_list', kwargs={'pk': self.request.user.pk})
 
 
 class ListDepartmentsView(LoginRequiredMixin, ListView):

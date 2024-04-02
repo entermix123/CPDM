@@ -2,12 +2,12 @@
 {% load static %}
 
 {% block extra_css %}
-    <link rel="stylesheet" href="{% static 'css/form_style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/forms/form_style.css' %}">
 {% endblock %}
 
 {% block content %}
     
-    <div class="form-container">
+    <div class="container">
         <h2>Edit Profile</h2>
         <form action="{% url 'update_profile' pk=profile.pk %}" method="post">
             {{ form.as_p }}

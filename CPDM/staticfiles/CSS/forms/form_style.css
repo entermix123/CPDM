@@ -48,7 +48,7 @@ body {
 }
 
 /* Form Container */
-.form-container {
+.container {
   max-width: 400px;
   margin: 0 auto;
   background-color: #2d2b2b;

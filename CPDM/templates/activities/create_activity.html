@@ -2,12 +2,12 @@
 {% load static %}
 
 {% block extra_css %}
-    <link rel="stylesheet" href="{% static 'css/accounts/registration_form.css' %}">
+    <link rel="stylesheet" href="{% static 'css/forms/form_style.css' %}">
 {% endblock %}
 
 {% block content %}
         <div class="container">
-        <h2>Create Activity Form</h2>
+        <h2>Create Activity</h2>
         <form action="{% url 'activity_create' pk=request.user.pk %}" method="post">
             {{ form.as_p }}
             <button type="submit">Create Activity</button>

@@ -12,7 +12,7 @@ class CreateDepartmentForm(forms.ModelForm):
 class UpdateDepartmentForm(forms.ModelForm):
     class Meta:
         model = Department
-        fields = ('name', 'owner', 'company', 'activities', 'processes', )
+        fields = ('name', 'company', 'activities', 'processes', )
 
 
 class DeleteDepartmentForm(forms.ModelForm):

@@ -21,8 +21,9 @@ class CreateActivityView(LoginRequiredMixin, CreateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        profile = self.request.user
+        profile = Profile.objects.get(pk=self.request.user)
         context['profile'] = profile
+
         return context
 
     def form_valid(self, form):
@@ -81,7 +82,8 @@ class DetailsActivityView(LoginRequiredMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['profile'] = self.request.user
+        profile = Profile.objects.get(pk=self.request.user)
+        context['profile'] = profile
 
         return context
 

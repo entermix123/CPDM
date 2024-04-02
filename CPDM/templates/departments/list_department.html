@@ -21,7 +21,7 @@
             <!-- Include Bootstrap CSS -->
             
             <!-- Button -->
-            <a href="{% url 'department_details' pk=company.pk department_id=department.id %}"
+            <a href="{% url 'department_details' pk=request.user.pk department_id=department.id %}"
                class="custom-link">Details</a>
         {% endfor %}
     {% else %}

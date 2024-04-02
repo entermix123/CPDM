@@ -4,12 +4,12 @@
 {% block title %}User Registration{% endblock %}
 
 {% block extra_css %}
-    <link rel="stylesheet" href="{% static 'css/accounts/registration_form.css' %}">
+    <link rel="stylesheet" href="{% static 'css/forms/form_style.css' %}">
 {% endblock %}
 
 {% block content %}
 
-    <div class="form-container">
+    <div class="container">
         <h2>User Registration</h2>
         <form action="{% url 'register_user' %}" method="post">
             {{ form }}

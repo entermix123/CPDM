@@ -1,7 +1,5 @@
 from django import forms
-from django.contrib.auth import forms as auth_forms, get_user_model
-from django.contrib.auth.forms import UsernameField
-from django.core.exceptions import ValidationError
+from django.contrib.auth import forms as auth_forms, get_user_model, authenticate
 from django.utils.translation import gettext_lazy as _
 
 from CPDM.accounts.models import Profile
@@ -46,12 +44,10 @@ class AccountUserChangeForm(auth_forms.UserChangeForm):
 
 class AccountLoginForm(auth_forms.AuthenticationForm):
 
-    error_messages = {
-        "invalid_login": _(
-            "Please enter a correct %(username)s and password."
-        ),
-        "inactive": _("This account is inactive."),
-    }
+    username = forms.EmailField(
+        max_length=254,
+        widget=forms.EmailInput(attrs={'autofocus': True}),
+    )
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -59,11 +55,33 @@ class AccountLoginForm(auth_forms.AuthenticationForm):
         self.fields['username'].widget.attrs.update(
             {'placeholder': 'Email'})                   # Add placeholder
         self.fields['password'].widget.attrs.update(
-            {'placeholder': 'Password'})                # Add placeholder
+            {'placeholder': 'Password'})
 
-    def get_invalid_login_error(self):
-        return ValidationError(
-            self.error_messages["invalid_login"],
-            code="invalid_login",
-            params={"username": self.username_field.verbose_name},
-        )
+    error_messages = {
+        "invalid_login": _(
+            "Please enter a correct %(username)s and password."
+        ),
+        "inactive": _("This account is inactive."),
+    }
+
+    def clean_username(self):
+        # Normalize the email address by lowercasing the domain part
+        return self.cleaned_data['username'].lower()
+
+    def clean(self):
+
+        email = self.cleaned_data.get('username')
+        password = self.cleaned_data.get('password')
+
+        if email is not None and password:
+            self.user_cache = authenticate(self.request, username=email, password=password)
+            if self.user_cache is None:
+                raise forms.ValidationError(
+                    self.error_messages['invalid_login'],
+                    code='invalid_login',
+                    params={'username': self.username_field.verbose_name},
+                )
+            else:
+                self.confirm_login_allowed(self.user_cache)
+
+        return self.cleaned_data

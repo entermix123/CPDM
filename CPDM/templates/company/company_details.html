@@ -14,10 +14,10 @@
     <h3>{{ company.name }}</h3>
     <br>
     <br>
-    <a href="{% url 'company_update' commpany_id=company.id pk=request.user.pk %}"
+    <a href="{% url 'company_update' pk=request.user.pk company_id=company.id %}"
        class="custom-link">Update Activity</a>            <br>
     <br>
-    <a href="{% url 'activity_delete' commpany_id=company.id pk=request.user.pk %}"
+    <a href="{% url 'company_delete' pk=request.user.pk company_id=company.id %}"
        class="custom-link">Delete Activity</a>
     <br>
 
