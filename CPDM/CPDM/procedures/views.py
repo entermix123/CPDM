@@ -29,7 +29,7 @@ class CreateProcedureView(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
     def get_success_url(self):
-        return reverse_lazy('procedure_list', kwargs={'pk': self.request.user.pk})
+        return reverse_lazy('procedures_list', kwargs={'pk': self.request.user.pk})
 
 
 class UpdateProcedureView(LoginRequiredMixin, UpdateView):
@@ -53,7 +53,12 @@ class UpdateProcedureView(LoginRequiredMixin, UpdateView):
         return super().form_valid(form)
 
     def get_success_url(self):
-        return reverse_lazy('procedures_list', kwargs={'pk': self.request.user.pk})
+        return reverse_lazy(
+            'procedure_details',
+            kwargs={
+                'pk': self.request.user.pk,
+                'procedure_id': self.kwargs['procedure_id']}
+        )
 
 
 class ListProcedureView(LoginRequiredMixin, ListView):

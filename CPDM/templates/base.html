@@ -16,17 +16,17 @@
     <ul>
         <li><a href="{% url 'index' %}">Home</a></li>
         {% if profile %}
-            <li><a href="#">Settings</a></li>
+{#            <li><a href="#">Settings</a></li>#}
             <li><a href="{% url 'profile_details' pk=request.user.pk %}">Profile</a></li>
             <li><a href="{% url 'company_list' pk=request.user.pk %}">Companies</a></li>
             <li><a href="{% url 'activity_list' pk=request.user.pk %}">Activities</a></li>
             <li><a href="{% url 'process_list' pk=request.user.pk %}">Processes</a></li>
+            <li><a href="{% url 'procedures_list' pk=request.user.pk %}">Procedures</a></li>
+            <li><a href="{% url 'instructions_list' pk=request.user.pk %}">Instructions</a></li>
             <li><a href="{% url 'departments_list' pk=request.user.pk %}">Departments</a></li>
             <li><a href="{% url 'employees_list' pk=request.user.pk %}">Employees</a></li>
-            <li><a href="#">Procedures</a></li>
-            <li><a href="{% url 'instructions_list' pk=request.user.pk %}">Instructions</a></li>
-            <li><a href="#">Software</a></li>
-            <li><a href="#">Risks</a></li>
+            <li><a href="{% url 'software_list' pk=request.user.pk %}">Software</a></li>
+{#            <li><a href="#">Risks</a></li>#}
             <li><a href="{% url 'logout_user' pk=request.user.pk %}">Logout</a></li>
         {% else %}
             <li><a href="{% url 'about' %}">About</a></li>

@@ -54,7 +54,12 @@ class UpdateProcessView(LoginRequiredMixin, UpdateView):
         return super().form_valid(form)
 
     def get_success_url(self):
-        return reverse_lazy('process_list', kwargs={'pk': self.request.user.pk})
+        return reverse_lazy(
+            'process_details',
+            kwargs={
+                'pk': self.request.user.pk,
+                'process_id': self.kwargs['process_id']}
+        )
 
 
 class ListProcessView(LoginRequiredMixin, ListView):

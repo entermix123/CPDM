@@ -29,7 +29,7 @@ class CreateDepartmentView(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
     def get_success_url(self):
-        return reverse_lazy('activity_list', kwargs={'pk': self.request.user.pk})
+        return reverse_lazy('departments_list', kwargs={'pk': self.request.user.pk})
 
 
 class UpdateDepartmentView(LoginRequiredMixin, UpdateView):
@@ -53,7 +53,12 @@ class UpdateDepartmentView(LoginRequiredMixin, UpdateView):
         return super().form_valid(form)
 
     def get_success_url(self):
-        return reverse_lazy('departments_list', kwargs={'pk': self.request.user.pk})
+        return reverse_lazy(
+            'department_details',
+            kwargs={
+                'pk': self.request.user.pk,
+                'department_id': self.kwargs['department_id']}
+        )
 
 
 class ListDepartmentsView(LoginRequiredMixin, ListView):
@@ -85,13 +90,16 @@ class DetailsDepartmentView(LoginRequiredMixin, DetailView):
         return context
 
     def get_success_url(self):
-        return reverse_lazy('activity_list', kwargs={'pk': self.request.user.pk})
+        return reverse_lazy('departments_list', kwargs={'pk': self.request.user.pk})
 
 
 class DeleteDepartmentView(LoginRequiredMixin, DeleteView):
     form_class = DeleteDepartmentForm
     template_name = 'departments/delete_department.html'
     form_class.base_fields['name'].disabled = True
+    form_class.base_fields['company'].disabled = True
+    form_class.base_fields['activities'].disabled = True
+    form_class.base_fields['processes'].disabled = True
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

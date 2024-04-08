@@ -36,7 +36,7 @@ class CreateProcedureTaskForm(forms.ModelForm):
 
 class UpdateProcessTaskForm(forms.ModelForm):
     class Meta:
-        model = Procedure
+        model = ProcedureTask
         fields = ('description', 'duration_days',)
 
 
@@ -49,5 +49,5 @@ class DeleteProcessTaskForm(forms.ModelForm):
             field.widget.attrs['readonly'] = 'readonly'
 
     class Meta:
-        model = Procedure
+        model = ProcedureTask
         fields = ('description', 'duration_days',)

@@ -78,7 +78,7 @@ WSGI_APPLICATION = 'CPDM.wsgi.application'
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "cpdm_db",
+        "NAME": "cpdm_db_latest",
         "USER": "postgres-user",
         "PASSWORD": "password",
         "HOST": "127.0.0.1",

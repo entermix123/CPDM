@@ -3,7 +3,7 @@
 
 
 {% block extra_css %}
-    <link rel="stylesheet" href="{% static 'css/accounts/profile_details.css' %}">
+    <link rel="stylesheet" href="{% static 'css/list_style.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -14,12 +14,12 @@
     <h3>{{ instruction.name }}</h3>
     <br>
     <br>
-    <a href="{% url 'update_instruction' pk=request.user.pk instruction_id=instruction.id %}"
-       class="custom-link">Update Instruction</a>
+    <h4><a href="{% url 'update_instruction' pk=request.user.pk instruction_id=instruction.id %}"
+       class="custom-link">Update Instruction</a></h4>
     <br>
     <br>
-    <a href="{% url 'delete_instruction' pk=request.user.pk instruction_id=instruction.id %}"
-       class="custom-link">Delete Instruction</a>
+    <h4><a href="{% url 'delete_instruction' pk=request.user.pk instruction_id=instruction.id %}"
+       class="custom-link">Delete Instruction</a></h4>
     <br>
 
 

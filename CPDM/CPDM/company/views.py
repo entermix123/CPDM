@@ -68,7 +68,12 @@ class UpdateCompanyView(LoginRequiredMixin, UpdateView):
         return super().form_valid(form)
 
     def get_success_url(self):
-        return reverse_lazy('company_list', kwargs={'pk': self.request.user.pk})
+        return reverse_lazy(
+            'company_details',
+            kwargs={
+                'pk': self.request.user.pk,
+                'company_id': self.kwargs['company_id']}
+        )
 
 
 def company_details(request, pk, company_id):

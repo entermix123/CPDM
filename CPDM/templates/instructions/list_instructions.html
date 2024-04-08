@@ -17,12 +17,12 @@
     {% if instruction_list %}
         <h3>Total Instructions: {{ instruction_list.count }}</h3>
         {% for instruction in instruction_list %}
-            <h4>{{ instruction }}</h4>
+            <h4>{{ instruction.name }}</h4>
             <!-- Include Bootstrap CSS -->
             
             <!-- Button -->
-            <a href="{% url 'instruction_details' pk=request.user.pk instruction_id=instruction.id %}"
-               class="custom-link">Details</a>
+            <h4><a href="{% url 'instruction_details' pk=request.user.pk instruction_id=instruction.id %}"
+               class="custom-link">Details</a></h4>
         {% endfor %}
     {% else %}
         <h3>You don't have any Instructions yet.</h3>

@@ -15,7 +15,7 @@ class CreateInstructionView(LoginRequiredMixin, CreateView):
 
     def get_queryset(self):
         user = self.request.user
-        queryset = Instruction.objects.filter(company_owner=user)
+        queryset = Instruction.objects.filter(owner=user)
         return queryset
 
     def get_context_data(self, **kwargs):
@@ -25,11 +25,11 @@ class CreateInstructionView(LoginRequiredMixin, CreateView):
         return context
 
     def form_valid(self, form):
-        form.instance.company_owner_id = self.request.user.pk
+        form.instance.owner_id = self.request.user.pk
         return super().form_valid(form)
 
     def get_success_url(self):
-        return reverse_lazy('employees_list', kwargs={'pk': self.request.user.pk})
+        return reverse_lazy('instructions_list', kwargs={'pk': self.request.user.pk})
 
 
 class UpdateInstructionView(LoginRequiredMixin, UpdateView):
@@ -53,7 +53,12 @@ class UpdateInstructionView(LoginRequiredMixin, UpdateView):
         return super().form_valid(form)
 
     def get_success_url(self):
-        return reverse_lazy('instructions_list', kwargs={'pk': self.request.user.pk})
+        return reverse_lazy(
+            'instruction_details',
+            kwargs={
+                'pk': self.request.user.pk,
+                'instruction_id': self.kwargs['instruction_id']}
+        )
 
 
 class ListInstructionsView(LoginRequiredMixin, ListView):
@@ -90,7 +95,7 @@ class DetailsInstructionView(LoginRequiredMixin, DetailView):
 
 class DeleteInstructionView(LoginRequiredMixin, DeleteView):
     form_class = DeleteInstructionForm
-    template_name = 'employees/delete_employee.html'
+    template_name = 'instructions/delete_instruction.html'
     form_class.base_fields['name'].disabled = True
     form_class.base_fields['description'].disabled = True
     form_class.base_fields['procedures'].disabled = True

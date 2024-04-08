@@ -55,7 +55,12 @@ class UpdateActivityView(LoginRequiredMixin, UpdateView):
         return super().form_valid(form)
 
     def get_success_url(self):
-        return reverse_lazy('activity_list', kwargs={'pk': self.request.user.pk})
+        return reverse_lazy(
+            'activity_details',
+            kwargs={
+                'pk': self.request.user.pk,
+                'activity_id': self.kwargs['activity_id']}
+        )
 
 
 class ListActivityView(LoginRequiredMixin, ListView):

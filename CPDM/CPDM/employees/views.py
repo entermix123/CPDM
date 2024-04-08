@@ -53,7 +53,12 @@ class UpdateEmployeeView(LoginRequiredMixin, UpdateView):
         return super().form_valid(form)
 
     def get_success_url(self):
-        return reverse_lazy('employees_list', kwargs={'pk': self.request.user.pk})
+        return reverse_lazy(
+            'employee_details',
+            kwargs={
+                'pk': self.request.user.pk,
+                'employee_id': self.kwargs['employee_id']}
+        )
 
 
 class ListEmployeesView(LoginRequiredMixin, ListView):
