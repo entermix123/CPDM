@@ -2,6 +2,8 @@
 Company Planning and Development Manager
 
 
+
+
 RUN APPLICATION IN DEVELOPMENT ENVIRONMENT:
 
 1. Set up PostgreSQL DataBase
