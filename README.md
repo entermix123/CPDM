@@ -27,7 +27,7 @@ RUN APPLICATION IN DEVELOPMENT ENVIRONMENT:
 
 	- install required packages
 		- open terminal
-		- go to requirements.txt dir
+		- go to the directory the contains requirements.txt
 		- termianl --> pip install -r requirements.txt
 
 
