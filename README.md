@@ -64,8 +64,8 @@ RUN APPLICATION IN DEVELOPMENT ENVIRONMENT:
 	- termianl --> python manage.py migrate
 
 6. Start Django server and play with the application
-	option 1 - Click on Run button and go to http://localhost:8000/
-	option 2 - terminal --> pyrhon manage.py runserver
+	option 1: Click on Run button and go to http://localhost:8000/
+	option 2: terminal --> pyrhon manage.py runserver
 		       - go to http://localhost:8000/
 
 
