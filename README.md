@@ -48,7 +48,7 @@ RUN APPLICATION IN DEVELOPMENT ENVIRONMENT:
 		- click Apply and OK
 
 
-5.Connect database and migrate models:
+5.Connect database and migrate models
 	- Click on database button on right on the PyCharm window
 		- Click on '+' / PostgreSQL
 		- Set Name: project_db
