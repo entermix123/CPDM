@@ -14,25 +14,20 @@ RUN APPLICATION IN DEVELOPMENT ENVIRONMENT:
 	- Start PostgreSQL container:
 		- terminal --> docker run -p 5432:5432 -e POSTGRES_USER=postgres-user -e POSTGRES_PASSWORD=password -d -v my-postgres-data:/var/lib/postgresql/data --name my_postgresql postgres:latest
 
-
 2. Open Pycharm Proffesional or else.
 	- File / Project from Version Control...
 	- URL: https://github.com/entermix123/CPDM.git
 	- Directory: D:/repos/test_from_VCS
 
 3. Set Virtual Environment and install packages:
-
 	- add local interpreter
 		- click on interpreter/add local interpreter
-
 	- install required packages
 		- open terminal
 		- go to the directory the contains requirements.txt
 		- termianl --> pip install -r requirements.txt
 
-
 4. Set Django Support Configuration and Django Server Configuration
-
 	- go to settings/Languages and Frameworks/Django
 		- Check Enable Django Support Check Box
 		- Set Django project root: D:\repos\test_from_VCS\CPDM\CPDM
@@ -40,7 +35,6 @@ RUN APPLICATION IN DEVELOPMENT ENVIRONMENT:
 		- set Manage script: D:\repos\test_from_VCS\CPDM\manage.py
 		- set Folder pattern to track files: migrations
 		- click Apply and OK
-
 	- on right side of Run/Debug buttons click on drop down menu and choose Edit Configurations...
 		- Click on '+' on top left of the window
 		- Choose Django Server
@@ -50,7 +44,6 @@ RUN APPLICATION IN DEVELOPMENT ENVIRONMENT:
 		- Set Post field: 8000
 		- Set Environment Variables: PYTHONUNBUFFERED=1;DJANGO_SETTINGS_MODULE=CPDM.settings
 		- click Apply and OK
-
 
 5. Connect database and migrate models
 	- Click on database button on right on the PyCharm window
