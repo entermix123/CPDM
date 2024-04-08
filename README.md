@@ -50,18 +50,18 @@ RUN APPLICATION IN DEVELOPMENT ENVIRONMENT:
 
 5.Connect database and migrate models:
 	- Click on database button on right on the PyCharm window
-	- Click on '+' / PostgreSQL
-	- Set Name: project_db
-	- Set User: postgres-user
-	- Set Paswword: password
-	- Install drivers if needed
-	- Click Test Connection / OK
+		- Click on '+' / PostgreSQL
+		- Set Name: project_db
+		- Set User: postgres-user
+		- Set Paswword: password
+		- Install drivers if needed
+		- Click Test Connection / OK
 	- Right click on project_db / new / Database
-	- Set Name: cpdm_db_latest
-	- Click OK
+		- Set Name: cpdm_db_latest
+		- Click OK
 	- On database tab click refresh button
-	- Click on the number on the right of the Database name / expand cpdm_db_latest and check Default Schema checkbox
-	- termianl --> python manage.py migrate
+		- Click on the number on the right of the Database name / expand cpdm_db_latest and check Default Schema checkbox
+		- termianl --> python manage.py migrate
 
 6. Start Django server and play with the application
 	option 1: Click on Run button and go to http://localhost:8000/
