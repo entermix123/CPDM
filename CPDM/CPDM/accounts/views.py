@@ -1,7 +1,6 @@
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout, get_user_model
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView
 
@@ -11,7 +10,6 @@ from django.views import generic as views
 
 from CPDM.accounts.forms import AccountUserCreationForm, AccountLoginForm
 from CPDM.accounts.models import Profile
-
 
 UserModel = get_user_model()
 
@@ -71,8 +69,8 @@ class UpdateProfileView(LoginRequiredMixin, views.UpdateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        profile = self.request.user
-        context['profile'] = profile
+        context['profile'] = Profile.objects.get(pk=self.request.user.pk)
+
         return context
 
     def form_valid(self, form):
@@ -96,7 +94,9 @@ class ProfileDetailView(LoginRequiredMixin, views.DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        user = self.request.user
+        user = (UserModel.objects
+                .prefetch_related('companies', 'activities')
+                .get(pk=self.request.user.pk))
         context['companies_owned'] = user.companies.all()
         context['activities_owned'] = user.activities.all()
 
@@ -113,7 +113,6 @@ class DeleteUserView(LoginRequiredMixin, views.DeleteView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        user = self.request.user
-        context['profile'] = user
+        context['profile'] = Profile.objects.get(pk=self.request.user.pk)
 
         return context
