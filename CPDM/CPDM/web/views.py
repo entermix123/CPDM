@@ -1,6 +1,8 @@
 from django.contrib.auth import get_user_model
 from django.shortcuts import render
 
+from CPDM.accounts.models import Profile
+
 UserModel = get_user_model()
 
 
@@ -20,4 +22,14 @@ def index(request):
 
 
 def about(request):
-    return render(request, 'web/about.html')
+
+    if request.user.is_anonymous:
+        user = None
+    else:
+        user = request.user
+
+    context = {
+        'profile': user,
+    }
+
+    return render(request, 'web/about.html', context)

@@ -1,4 +1,51 @@
 {% extends 'base.html' %}
+{% load static %}
+
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/about.css' %}">
+{% endblock %}
 
 {% block content %}
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>About Our Company</title>
+        
+    </head>
+    <body>
+
+    <div class="container">
+        <h1>About Our Company</h1>
+        <p>We are a team of experienced professionals dedicated to planning, creating, and developing successful
+            companies. Our mission is to help aspiring entrepreneurs turn their ideas into thriving businesses.</p>
+
+        <h2>Our Services</h2>
+        <ul>
+            <li><strong>Planning:</strong> We provide comprehensive business planning services, including market
+                research, feasibility studies, and strategic planning.
+            </li>
+            <li><strong>Creation:</strong> From concept to launch, we assist in company formation, branding, and product
+                development.
+            </li>
+            <li><strong>Development:</strong> Our team offers ongoing support and guidance to nurture and grow your
+                business, from scaling operations to securing funding.
+            </li>
+        </ul>
+
+        <h2>Why Choose Us?</h2>
+        <p>With years of industry experience and a proven track record of success, we are committed to delivering
+            results. Our tailored approach, attention to detail, and passion for innovation set us apart.</p>
+
+        <h2>Get in Touch</h2>
+        <p>Ready to take your business to the next level? Contact us today to learn more about our services and how we
+            can help you succeed.</p>
+        <p>Email: info@companyname.com<br>Phone: 123-456-7890</p>
+    </div>
+
+    </body>
+    </html>
+
 {% endblock %}
