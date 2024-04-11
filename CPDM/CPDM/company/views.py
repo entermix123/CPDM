@@ -24,6 +24,13 @@ class CreateCompanyView(LoginRequiredMixin, CreateView):
         context['profile'] = profile
         return context
 
+    # Set placeholders in fields
+    def get_form(self, form_class=None):
+        form = super().get_form(form_class=form_class)
+        form.fields['website'].widget.attrs['placeholder'] = "https://..."
+
+        return form
+
     def form_valid(self, form):
         form.instance.owner_id = self.request.user.pk
         return super().form_valid(form)
@@ -51,7 +58,7 @@ class UpdateCompanyView(LoginRequiredMixin, UpdateView):
     form_class = CompanyUpdateForm
     template_name = 'company/update_company.html'
 
-    def get_object(self):
+    def get_object(self, **kwargs):
         obj = get_object_or_404(Company, pk=self.kwargs.get('company_id'))
         return obj
 
@@ -98,7 +105,7 @@ def company_details(request, pk, company_id):
 class DetailsCompanyView(LoginRequiredMixin, DetailView):
     template_name = 'company/company_details.html'
 
-    def get_object(self):
+    def get_object(self, **kwargs):
         obj = get_object_or_404(Company, pk=self.kwargs.get('company_id'))
         return obj
 
@@ -127,7 +134,7 @@ class DeleteCompanyView(LoginRequiredMixin, DeleteView):
         context['profile'] = profile
         return context
 
-    def get_object(self):
+    def get_object(self, **kwargs):
         obj = get_object_or_404(Company, pk=self.kwargs.get('company_id'))
         return obj
 

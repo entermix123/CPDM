@@ -32,13 +32,13 @@ class TestAccounts(TestCase):
 
         # Act
         with self.assertRaises(exceptions.ValidationError) as context:
-            book = UserModel.objects.create(**user_data)
-            book.full_clean()  # call validators
+            user = UserModel.objects.create(**user_data)
+            user.full_clean()  # call validators
 
         # Assert
         exception = context.exception
-        title_exception = str(exception.error_dict['email'][0])
-        self.assertEqual("['Enter a valid email address.']", title_exception)
+        email_exception = str(exception.error_dict['email'][0])
+        self.assertEqual("['Enter a valid email address.']", email_exception)
 
     def test_profile_str__with_valid_data__expect_success(self):
         # Arrange
