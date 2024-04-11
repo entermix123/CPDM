@@ -9,12 +9,12 @@ RUN APPLICATION IN DEVELOPMENT ENVIRONMENT:
 
 
 1. Set up PostgreSQL DataBase
-	- Go to Docker.com and register an account and login
-	- Download Docker Desktop or else for specific OS and login
+	- Go to Docker.com, register an account and login
+	- Download, install Docker Desktop or else for specific OS and login
 	- Start PostgreSQL container:
 		- terminal --> docker run -p 5432:5432 -e POSTGRES_USER=postgres-user -e POSTGRES_PASSWORD=password -d -v my-postgres-data:/var/lib/postgresql/data --name my_postgresql postgres:latest
 
-2. Open Pycharm Proffesional or else.
+2. Open PyCharm Proffesional or else.
 	- File / Project from Version Control...
 	- URL: https://github.com/entermix123/CPDM.git
 	- Directory: D:/repos/test_from_VCS
@@ -45,7 +45,7 @@ RUN APPLICATION IN DEVELOPMENT ENVIRONMENT:
 		- Set Environment Variables: PYTHONUNBUFFERED=1;DJANGO_SETTINGS_MODULE=CPDM.settings
 		- click Apply and OK
 
-5. Connect database and migrate models
+5. Connect database, migrate models and visualize tables
 	- Click on database button on right on the PyCharm window
 		- Click on '+' / PostgreSQL
 		- Set Name: project_db
@@ -56,9 +56,9 @@ RUN APPLICATION IN DEVELOPMENT ENVIRONMENT:
 	- Right click on project_db / new / Database
 		- Set Name: cpdm_db_latest
 		- Click OK
+		- termianl --> python manage.py migrate
 	- On database tab click refresh button
 		- Click on the number on the right of the Database name / expand cpdm_db_latest and check Default Schema checkbox
-		- termianl --> python manage.py migrate
 
 6. Start Django server and play with the application
 	- option 1: Click on Run button
