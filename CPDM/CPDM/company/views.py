@@ -51,7 +51,7 @@ class UpdateCompanyView(LoginRequiredMixin, UpdateView):
     form_class = CompanyUpdateForm
     template_name = 'company/update_company.html'
 
-    def get_object(self):
+    def get_object(self, **kwargs):
         obj = get_object_or_404(Company, pk=self.kwargs.get('company_id'))
         return obj
 
@@ -98,7 +98,7 @@ def company_details(request, pk, company_id):
 class DetailsCompanyView(LoginRequiredMixin, DetailView):
     template_name = 'company/company_details.html'
 
-    def get_object(self):
+    def get_object(self, **kwargs):
         obj = get_object_or_404(Company, pk=self.kwargs.get('company_id'))
         return obj
 
@@ -127,7 +127,7 @@ class DeleteCompanyView(LoginRequiredMixin, DeleteView):
         context['profile'] = profile
         return context
 
-    def get_object(self):
+    def get_object(self, **kwargs):
         obj = get_object_or_404(Company, pk=self.kwargs.get('company_id'))
         return obj
 

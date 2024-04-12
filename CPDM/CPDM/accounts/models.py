@@ -43,6 +43,9 @@ class AccountsUser(CreatedUpdatedMixin, auth_models.AbstractBaseUser, auth_model
         editable=False,
     )
 
+    class Meta:
+        verbose_name_plural = 'Users'
+
     def save(self, *args, **kwargs):  # overwrite save() to generate and create unique slug
         self.slug = slugify(f'{self.email} + {self.created}')
         return super().save(*args, **kwargs)

@@ -3,25 +3,30 @@ from django.contrib.auth import authenticate, login, logout, get_user_model
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView
+from rest_framework import generics, permissions, request
+from rest_framework.authtoken import views as token_views
 
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views import generic as views
+from rest_framework.response import Response
+from rest_framework.status import HTTP_201_CREATED
 
 from CPDM.accounts.forms import AccountUserCreationForm, AccountLoginForm
 from CPDM.accounts.models import Profile
+from CPDM.accounts.serielizers import UserRegisterSerializer, ProfileSerializer, UserSerializer
 
 UserModel = get_user_model()
 
 
 class LoginUserView(LoginView):
-    form_class = AccountLoginForm   # use django auth form
+    form_class = AccountLoginForm  # use django auth form
     template_name = 'accounts/login.html'
 
     # overwrite get() method and set the form in the context
     def get(self, request, *args, **kwargs):
         context = {
-            'form': self.form_class(),          # take form_class
+            'form': self.form_class(),  # take form_class
         }
         return render(request, 'accounts/login.html', context)
 
@@ -40,7 +45,7 @@ class LoginUserView(LoginView):
 
 class RegisterUserView(views.CreateView):
     form_class = AccountUserCreationForm
-    template_name = 'accounts/register.html'       # choose template
+    template_name = 'accounts/register.html'  # choose template
     success_url = reverse_lazy('index')
 
     def form_valid(self, form):
@@ -116,3 +121,48 @@ class DeleteUserView(LoginRequiredMixin, views.DeleteView):
         context['profile'] = Profile.objects.get(pk=self.request.user.pk)
 
         return context
+
+
+class RegisterApiView(generics.CreateAPIView):
+    serializer_class = UserRegisterSerializer
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = serializer.save()
+
+        profile_data = {
+            'first_name': request.data.get('first_name'),
+            'last_name': request.data.get('last_name'),
+            'user': user.pk,
+        }
+
+        profile_serializer = ProfileSerializer(data=profile_data)
+        profile_serializer.is_valid(raise_exception=True)
+        profile_serializer.save()
+
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, status=HTTP_201_CREATED, headers=headers)
+
+
+class LoginApiView(token_views.ObtainAuthToken):  # Login view in REST only project
+    permission_classes = [permissions.AllowAny]
+
+
+class UserApiUpdateView(generics.UpdateAPIView):
+    queryset = UserModel.objects.all()
+    serializer_class = UserSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_object(self):
+        return self.request.user
+
+    def perform_update(self, serializer):
+        instance = serializer.save()
+
+        # Update the associated profile
+        profile, _ = Profile.objects.get_or_create(user=instance)
+        profile_data = self.request.data.get('profile', {})
+        profile_serializer = ProfileSerializer(profile, data=profile_data, partial=True)
+        profile_serializer.is_valid(raise_exception=True)
+        profile_serializer.save()

@@ -36,7 +36,7 @@ class UpdateDepartmentView(LoginRequiredMixin, UpdateView):
     form_class = UpdateDepartmentForm
     template_name = 'departments/department_update.html'
 
-    def get_object(self):
+    def get_object(self, **kwargs):
         obj = get_object_or_404(Department, pk=self.kwargs.get('department_id'))
         return obj
 
@@ -79,7 +79,7 @@ class ListDepartmentsView(LoginRequiredMixin, ListView):
 class DetailsDepartmentView(LoginRequiredMixin, DetailView):
     template_name = 'departments/department_details.html'
 
-    def get_object(self):
+    def get_object(self, **kwargs):
         obj = get_object_or_404(Department, pk=self.kwargs.get('department_id'))
         return obj
 
@@ -107,7 +107,7 @@ class DeleteDepartmentView(LoginRequiredMixin, DeleteView):
         context['profile'] = profile
         return context
 
-    def get_object(self):
+    def get_object(self, **kwargs):
         obj = get_object_or_404(Department, pk=self.kwargs.get('department_id'))
         return obj
 

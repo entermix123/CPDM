@@ -42,6 +42,9 @@ class Process(CreatedUpdatedMixin, models.Model):
         related_name="processes"
     )
 
+    class Meta:
+        verbose_name_plural = 'Processes'
+
     def __str__(self):
         return self.name
 

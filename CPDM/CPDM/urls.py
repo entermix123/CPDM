@@ -3,6 +3,7 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
 
+from CPDM.accounts.views import RegisterApiView, LoginApiView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -18,6 +19,14 @@ urlpatterns = [
         path('instructions/', include('CPDM.instructions.urls')),
         path('software/', include('CPDM.software.urls')),
         path('risk_matrix/', include('CPDM.risk_matrix.urls')),
+    ])),
+
+    path('api/', include([
+        path('accounts/login/', LoginApiView.as_view(), name='api_login_user'),
+        path('accounts/register/', RegisterApiView.as_view(), name='api_user_create'),
+        path('accounts/<int:pk>/', include([
+            path('', include('CPDM.accounts.urls')),
+        ])),
     ])),
 ]
 

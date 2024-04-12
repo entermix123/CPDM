@@ -1,5 +1,4 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.forms import modelform_factory
 from django.shortcuts import redirect, render, get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, ListView, UpdateView, DetailView, DeleteView
@@ -38,7 +37,7 @@ class UpdateActivityView(LoginRequiredMixin, UpdateView):
     form_class = ActivityUpdateForm
     template_name = 'activities/update_activity.html'
 
-    def get_object(self):
+    def get_object(self, **kwargs):
         obj = get_object_or_404(Activity, pk=self.kwargs.get('activity_id'))
         return obj
 
@@ -81,7 +80,7 @@ class ListActivityView(LoginRequiredMixin, ListView):
 class DetailsActivityView(LoginRequiredMixin, DetailView):
     template_name = 'activities/activity_details.html'
 
-    def get_object(self):
+    def get_object(self, **kwargs):
         obj = get_object_or_404(Activity, pk=self.kwargs.get('activity_id'))
         return obj
 
@@ -146,7 +145,7 @@ class ActivityDeleteView(LoginRequiredMixin, DeleteView):
         context['profile'] = profile
         return context
 
-    def get_object(self):
+    def get_object(self, **kwargs):
         obj = get_object_or_404(Activity, pk=self.kwargs.get('activity_id'))
         return obj
 

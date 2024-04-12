@@ -36,7 +36,7 @@ class UpdateProcedureView(LoginRequiredMixin, UpdateView):
     form_class = UpdateProcedureForm
     template_name = 'procedures/procedure_update.html'
 
-    def get_object(self):
+    def get_object(self, **kwargs):
         obj = get_object_or_404(Procedure, pk=self.kwargs.get('procedure_id'))
         return obj
 
@@ -79,7 +79,7 @@ class ListProcedureView(LoginRequiredMixin, ListView):
 class DetailsProcedureView(LoginRequiredMixin, DetailView):
     template_name = 'procedures/procedure_details.html'
 
-    def get_object(self):
+    def get_object(self, **kwargs):
         obj = get_object_or_404(Procedure, pk=self.kwargs.get('procedure_id'))
         return obj
 
@@ -106,7 +106,7 @@ class DeleteProcedureView(LoginRequiredMixin, DeleteView):
         context['profile'] = profile
         return context
 
-    def get_object(self):
+    def get_object(self, **kwargs):
         obj = get_object_or_404(Procedure, pk=self.kwargs.get('procedure_id'))
         return obj
 

@@ -36,7 +36,7 @@ class UpdateEmployeeView(LoginRequiredMixin, UpdateView):
     form_class = UpdateEmployeeForm
     template_name = 'employees/update_employee.html'
 
-    def get_object(self):
+    def get_object(self, **kwargs):
         obj = get_object_or_404(Employee, pk=self.kwargs.get('employee_id'))
         return obj
 
@@ -79,7 +79,7 @@ class ListEmployeesView(LoginRequiredMixin, ListView):
 class DetailsEmployeeView(LoginRequiredMixin, DetailView):
     template_name = 'employees/employee_details.html'
 
-    def get_object(self):
+    def get_object(self, **kwargs):
         obj = get_object_or_404(Employee, pk=self.kwargs.get('employee_id'))
         return obj
 
@@ -109,7 +109,7 @@ class DeleteEmployeeView(LoginRequiredMixin, DeleteView):
         context['profile'] = profile
         return context
 
-    def get_object(self):
+    def get_object(self, **kwargs):
         obj = get_object_or_404(Employee, pk=self.kwargs.get('employee_id'))
         return obj
 

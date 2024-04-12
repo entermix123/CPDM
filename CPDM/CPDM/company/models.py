@@ -74,6 +74,9 @@ class Company(models.Model):
         editable=False,
     )
 
+    class Meta:
+        verbose_name_plural = 'Companies'
+
     def save(self, *args, **kwargs):
         self.slug = slugify(f'{self.name} + {self.founded_date}')
         return super().save(*args, **kwargs)

@@ -36,7 +36,7 @@ class UpdateSoftwareView(LoginRequiredMixin, UpdateView):
     form_class = UpdateSoftwareForm
     template_name = 'software/software_update.html'
 
-    def get_object(self):
+    def get_object(self, **kwargs):
         obj = get_object_or_404(Software, pk=self.kwargs.get('software_id'))
         return obj
 
@@ -79,7 +79,7 @@ class ListSoftwareView(LoginRequiredMixin, ListView):
 class DetailsSoftwareView(LoginRequiredMixin, DetailView):
     template_name = 'software/software_details.html'
 
-    def get_object(self):
+    def get_object(self, **kwargs):
         obj = get_object_or_404(Software, pk=self.kwargs.get('software_id'))
         return obj
 
@@ -109,7 +109,7 @@ class DeleteSoftwareView(LoginRequiredMixin, DeleteView):
         context['profile'] = profile
         return context
 
-    def get_object(self):
+    def get_object(self, **kwargs):
         obj = get_object_or_404(Software, pk=self.kwargs.get('software_id'))
         return obj
 

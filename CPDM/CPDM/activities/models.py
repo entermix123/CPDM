@@ -39,5 +39,8 @@ class Activity(CreatedUpdatedMixin, models.Model):
         on_delete=models.CASCADE,
     )
 
+    class Meta:
+        verbose_name_plural = 'Activities'
+
     def __str__(self):
         return self.title

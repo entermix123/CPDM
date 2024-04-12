@@ -36,7 +36,7 @@ class UpdateInstructionView(LoginRequiredMixin, UpdateView):
     form_class = UpdateInstructionForm
     template_name = 'instructions/update_instruction.html'
 
-    def get_object(self):
+    def get_object(self, **kwargs):
         obj = get_object_or_404(Instruction, pk=self.kwargs.get('instruction_id'))
         return obj
 
@@ -79,7 +79,7 @@ class ListInstructionsView(LoginRequiredMixin, ListView):
 class DetailsInstructionView(LoginRequiredMixin, DetailView):
     template_name = 'instructions/instruction_details.html'
 
-    def get_object(self):
+    def get_object(self, **kwargs):
         obj = get_object_or_404(Instruction, pk=self.kwargs.get('instruction_id'))
         return obj
 
@@ -106,7 +106,7 @@ class DeleteInstructionView(LoginRequiredMixin, DeleteView):
         context['profile'] = profile
         return context
 
-    def get_object(self):
+    def get_object(self, **kwargs):
         obj = get_object_or_404(Instruction, pk=self.kwargs.get('instruction_id'))
         return obj
 
