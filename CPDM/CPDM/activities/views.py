@@ -9,7 +9,7 @@ from CPDM.accounts.models import Profile
 from CPDM.activities.forms import ActivityCreateForm, ActivityUpdateForm, DeleteActivityForm
 from CPDM.activities.models import Activity
 from CPDM.activities.serielizers import ActivityListSerializer, ActivityCreateSerializer, ActivityDetailsSerializer, \
-    ActivityDeleteSerializer
+    ActivityDeleteSerializer, ActivityUpdateSerializer
 
 
 class CreateActivityView(LoginRequiredMixin, CreateView):
@@ -184,10 +184,9 @@ def delete_activity(request, pk, activity_id):
 
 class ActivityListApiView(views.ListAPIView):
     permission_classes = [permissions.IsAuthenticated]
-    list_serializer_class = ActivityListSerializer
+    serializer_class = ActivityListSerializer
 
     def get_queryset(self):
-        super().get_queryset()
         queryset = Activity.objects.filter(owner=self.request.user)
         return queryset
 
@@ -207,14 +206,14 @@ class ActivityDetailsUpdateDeleteApiView(views.RetrieveUpdateDestroyAPIView):
     permission_classes = [permissions.IsAuthenticated]
 
     details_serializer_class = ActivityDetailsSerializer
-    update_serializer_class = ActivityCreateSerializer
+    update_serializer_class = ActivityUpdateSerializer
     delete_serializer_class = ActivityDeleteSerializer
 
     serializer_class = details_serializer_class
 
-    def get_object(self):
-        obj = Activity.objects.get(pk=self.kwargs.get('activity_id'))
-        return obj
+    def get_queryset(self):
+        queryset = Activity.objects.filter(owner=self.request.user)
+        return queryset
 
     def get_serializer_class(self):
         if self.request.method == 'PUT':

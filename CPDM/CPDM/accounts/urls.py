@@ -11,5 +11,4 @@ urlpatterns = (
     path('update_user/', UserApiUpdateView.as_view(), name='api_update_user'),
     path('delete_user/', UserApiDeleteView.as_view(), name='api_delete_user'),
     path('update_profile/', ProfileApiUpdateView.as_view(), name='api_update_profile'),
-
 )

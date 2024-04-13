@@ -37,6 +37,19 @@ class ActivityCreateSerializer(ActivityBaseSerializer):
         return activity
 
 
+class ActivityUpdateSerializer(ActivityBaseSerializer):
+    class Meta:
+        model = Activity
+        fields = '__all__'
+        read_only_fields = ['owner',]
+
+    def update(self, instance, validated_data):
+        activity = Activity(**validated_data)
+        owner = instance.owner
+        activity.owner = owner
+        activity.save()
+
+
 class ActivityDetailsSerializer(ActivityBaseSerializer):
     class Meta:
         model = Activity

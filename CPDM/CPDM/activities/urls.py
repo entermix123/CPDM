@@ -16,7 +16,7 @@ urlpatterns = (
 
     path('create_activity/', ActivityCreateApiView.as_view(), name='api_activity_create'),
     path('list_activity/', ActivityListApiView.as_view(), name='api_activity_list'),
-    path('details_activity/', ActivityDetailsUpdateDeleteApiView.as_view(), name='api_activity_details'),
-    path('update_activity/', ActivityDetailsUpdateDeleteApiView.as_view(), name='api_activity_update'),
-    path('delete_activity/', ActivityDetailsUpdateDeleteApiView.as_view(), name='api_activity_delete'),
+    path('details_activity/<int:pk>/', ActivityDetailsUpdateDeleteApiView.as_view(), name='api_activity_details'),
+    path('update_activity/<int:pk>/', ActivityDetailsUpdateDeleteApiView.as_view(), name='api_activity_update'),
+    path('delete_activity/<int:pk>/', ActivityDetailsUpdateDeleteApiView.as_view(), name='api_activity_delete'),
 )
