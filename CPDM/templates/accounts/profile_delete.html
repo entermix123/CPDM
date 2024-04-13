@@ -8,9 +8,9 @@
 {% block content %}
     <div class="container">
         <h2>Sorry to see you go</h2>
-        <form action="{% url 'delete_profile' pk=request.user.pk %}" method="post">
+        <form action="{% url 'delete_user' pk=request.user.pk %}" method="post">
             {{ form.as_p }}
-            <button type="submit">Delete Profile</button>
+            <button type="submit">Delete User</button>
 
             {% csrf_token %}
         </form>

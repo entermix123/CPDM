@@ -102,13 +102,7 @@ class DetailsActivityView(LoginRequiredMixin, DetailView):
 def activity_details(request, pk, activity_id):
     profile = Profile.objects.get(pk=request.user.pk)
     activity = Activity.objects.get(pk=activity_id)
-
     form = ActivityUpdateForm(instance=activity)
-    if request.method == 'POST':
-        form = ActivityUpdateForm(request.POST, instance=activity)
-        if form.is_valid():
-            form.save()
-            return redirect('activity_list', pk=pk)
 
     context = {
         'activity': activity,
@@ -121,8 +115,8 @@ def activity_details(request, pk, activity_id):
 def activity_update(request, pk, activity_id):
     profile = Profile.objects.get(pk=request.user.pk)
     activity = Activity.objects.get(pk=activity_id)
-
     form = ActivityCreateForm(instance=activity)
+
     if request.method == 'POST':
         form = ActivityUpdateForm(request.POST, instance=activity)
         if form.is_valid():

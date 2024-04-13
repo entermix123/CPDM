@@ -4,6 +4,10 @@ from CPDM.software.models import Software
 
 
 class CreateSoftwareForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(CreateSoftwareForm, self).__init__(*args, **kwargs)
+        self.fields['vendor'].widget.attrs['placeholder'] = 'https://..'
+
     class Meta:
         model = Software
         fields = ('name', 'version', 'license', 'vendor', 'departments', 'company')

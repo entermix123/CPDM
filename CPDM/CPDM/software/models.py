@@ -40,7 +40,6 @@ class Software(CreatedUpdatedMixin, models.Model):
         max_length=20,
         blank=False,
         null=False,
-        help_text='Field is required. Include software version'
     )
 
     license = models.CharField(
@@ -51,7 +50,6 @@ class Software(CreatedUpdatedMixin, models.Model):
                 message=f'Cannot have less than {MIN_LICENSE_NAME_LENGTH} characters',
             ),
         ],
-        help_text='Field is required. Include software license name and number',
         blank=False,
         null=False,
     )
