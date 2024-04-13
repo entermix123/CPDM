@@ -3,7 +3,7 @@ from django.contrib.auth import authenticate, login, logout, get_user_model
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView
-from rest_framework import generics, permissions, request
+from rest_framework import generics, permissions
 from rest_framework.authtoken import views as token_views
 
 from django.shortcuts import render, redirect
@@ -14,7 +14,8 @@ from rest_framework.status import HTTP_201_CREATED
 
 from CPDM.accounts.forms import AccountUserCreationForm, AccountLoginForm
 from CPDM.accounts.models import Profile
-from CPDM.accounts.serielizers import UserRegisterSerializer, ProfileSerializer, UserSerializer
+from CPDM.accounts.serielizers import UserRegisterSerializer, ProfileSerializer, UserSerializer, \
+    ProfileUpdateSerializer, UserDeleteSerializer
 
 UserModel = get_user_model()
 
@@ -164,5 +165,29 @@ class UserApiUpdateView(generics.UpdateAPIView):
         profile, _ = Profile.objects.get_or_create(user=instance)
         profile_data = self.request.data.get('profile', {})
         profile_serializer = ProfileSerializer(profile, data=profile_data, partial=True)
+        profile_serializer.is_valid(raise_exception=True)
+        profile_serializer.save()
+
+
+class UserApiDeleteView(generics.DestroyAPIView):
+    queryset = UserModel.objects.all()
+    serializer_class = UserDeleteSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_object(self):
+        return self.request.user
+
+
+class ProfileApiUpdateView(generics.UpdateAPIView):
+    serializer_class = ProfileUpdateSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_object(self):
+        return Profile.objects.get(user=self.request.user)
+
+    def perform_update(self, serializer):
+        instance = serializer.save()
+        profile_data = self.request.data.get('profile', {})
+        profile_serializer = ProfileSerializer(instance=instance, data=profile_data, partial=True)
         profile_serializer.is_valid(raise_exception=True)
         profile_serializer.save()

@@ -1,7 +1,8 @@
 from django.urls import path
 
 from CPDM.activities.views import CreateActivityView, UpdateActivityView, ListActivityView, DetailsActivityView, \
-    activity_details, activity_update, ActivityDeleteView, delete_activity
+    activity_details, activity_update, ActivityDeleteView, delete_activity, ActivityCreateApiView, ActivityListApiView, \
+    ActivityDetailsUpdateDeleteApiView
 
 urlpatterns = (
     path('create/', CreateActivityView.as_view(), name='activity_create'),
@@ -12,4 +13,10 @@ urlpatterns = (
     # path('update/<int:activity_id>/', activity_update, name='activity_update'),
     path('delete/<int:activity_id>/', ActivityDeleteView.as_view(), name='activity_delete'),
     # path('delete/<int:activity_id>/', delete_activity, name='activity_delete'),
+
+    path('create_activity/', ActivityCreateApiView.as_view(), name='api_activity_create'),
+    path('list_activity/', ActivityListApiView.as_view(), name='api_activity_list'),
+    path('details_activity/', ActivityDetailsUpdateDeleteApiView.as_view(), name='api_activity_details'),
+    path('update_activity/', ActivityDetailsUpdateDeleteApiView.as_view(), name='api_activity_update'),
+    path('delete_activity/', ActivityDetailsUpdateDeleteApiView.as_view(), name='api_activity_delete'),
 )

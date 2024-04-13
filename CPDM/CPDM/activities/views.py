@@ -1,11 +1,15 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect, render, get_object_or_404
 from django.urls import reverse_lazy
+from rest_framework import generics as views, permissions, status
 from django.views.generic import CreateView, ListView, UpdateView, DetailView, DeleteView
+from rest_framework.response import Response
 
 from CPDM.accounts.models import Profile
 from CPDM.activities.forms import ActivityCreateForm, ActivityUpdateForm, DeleteActivityForm
 from CPDM.activities.models import Activity
+from CPDM.activities.serielizers import ActivityListSerializer, ActivityCreateSerializer, ActivityDetailsSerializer, \
+    ActivityDeleteSerializer
 
 
 class CreateActivityView(LoginRequiredMixin, CreateView):
@@ -176,3 +180,48 @@ def delete_activity(request, pk, activity_id):
     }
 
     return render(request, 'activities/activity_delete.html', context)
+
+
+class ActivityListApiView(views.ListAPIView):
+    permission_classes = [permissions.IsAuthenticated]
+    list_serializer_class = ActivityListSerializer
+
+    def get_queryset(self):
+        super().get_queryset()
+        queryset = Activity.objects.filter(owner=self.request.user)
+        return queryset
+
+
+class ActivityCreateApiView(views.CreateAPIView):
+    permission_classes = [permissions.IsAuthenticated]
+    serializer_class = ActivityCreateSerializer
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+
+class ActivityDetailsUpdateDeleteApiView(views.RetrieveUpdateDestroyAPIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    details_serializer_class = ActivityDetailsSerializer
+    update_serializer_class = ActivityCreateSerializer
+    delete_serializer_class = ActivityDeleteSerializer
+
+    serializer_class = details_serializer_class
+
+    def get_object(self):
+        obj = Activity.objects.get(pk=self.kwargs.get('activity_id'))
+        return obj
+
+    def get_serializer_class(self):
+        if self.request.method == 'PUT':
+            self.serializer_class = self.update_serializer_class
+        elif self.request.method == 'DELETE':
+            self.serializer_class = self.delete_serializer_class
+        elif self.request.method == 'GET':
+            self.serializer_class = self.details_serializer_class
+
+        return self.serializer_class

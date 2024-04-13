@@ -1,0 +1,84 @@
+/* General styles */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-image: url('staticfiles/css/images/background/7.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 8px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Departments */
+.departments h3 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.departments ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.departments li {
+  margin-bottom: 0.5rem;
+}
+
+/* Process Steps */
+.process-steps h3 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.process-steps table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.process-steps th,
+.process-steps td {
+  padding: 0.5rem;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.process-steps th {
+  background-color: #f2f2f2;
+}
+
+/* Step Requirements */
+.step-requirements h3 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.step-requirements ol {
+  padding-left: 1.5rem;
+}
+
+.step-requirements li {
+  margin-bottom: 0.5rem;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem;
+  }
+
+  .departments,
+  .process-steps,
+  .step-requirements {
+    width: 100%;
+  }
+}

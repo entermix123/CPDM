@@ -26,6 +26,7 @@ urlpatterns = [
         path('accounts/register/', RegisterApiView.as_view(), name='api_user_create'),
         path('accounts/<int:pk>/', include([
             path('', include('CPDM.accounts.urls')),
+            path('activity/', include('CPDM.activities.urls')),
         ])),
     ])),
 ]
