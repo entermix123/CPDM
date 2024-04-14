@@ -13,11 +13,6 @@ class CreateDepartmentView(LoginRequiredMixin, CreateView):
     model = Department
     template_name = 'departments/create_department.html'
 
-    def get_queryset(self):
-        user = self.request.user
-        queryset = Department.objects.filter(owner=user)
-        return queryset
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         profile = Profile.objects.filter(pk=self.request.user.pk)

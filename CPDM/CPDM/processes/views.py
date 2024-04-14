@@ -14,11 +14,6 @@ class CreateProcessView(LoginRequiredMixin, CreateView):
     model = Process
     template_name = 'processes/create_process.html'
 
-    def get_queryset(self):
-        user = self.request.user
-        queryset = Department.objects.filter(owner=user)
-        return queryset
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         profile = Profile.objects.filter(pk=self.request.user.pk)

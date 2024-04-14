@@ -13,11 +13,6 @@ class CreateCompanyView(LoginRequiredMixin, CreateView):
     model = Company
     template_name = 'company/create_company.html'
 
-    def get_queryset(self):
-        user = self.request.user
-        queryset = Company.objects.filter(owner=user)
-        return queryset
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         profile = self.request.user

@@ -13,11 +13,6 @@ class CreateEmployeeView(LoginRequiredMixin, CreateView):
     model = Employee
     template_name = 'employees/create_employee.html'
 
-    def get_queryset(self):
-        user = self.request.user
-        queryset = Employee.objects.filter(company_owner=user)
-        return queryset
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         profile = Profile.objects.filter(pk=self.request.user.pk)
