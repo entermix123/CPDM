@@ -126,4 +126,7 @@ class DeleteSoftwareView(LoginRequiredMixin, DeleteView):
         return kwargs
 
     def get_success_url(self):
-        return reverse_lazy('software_list', kwargs={'pk': self.request.user.pk})
+        return reverse_lazy(
+            'software_list',
+            kwargs={'pk': self.request.user.pk}
+        )
