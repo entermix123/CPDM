@@ -17,11 +17,6 @@ class CreateActivityView(LoginRequiredMixin, CreateView):
     model = Activity
     template_name = 'activities/create_activity.html'
 
-    def get_queryset(self):
-        user = self.request.user
-        queryset = Activity.objects.filter(owner=user)
-        return queryset
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         profile = Profile.objects.get(pk=self.request.user)
