@@ -24,6 +24,11 @@ class CreateEmployeeView(LoginRequiredMixin, CreateView):
         context['profile'] = profile
         return context
 
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['user'] = self.request.user
+        return kwargs
+
     def form_valid(self, form):
         form.instance.company_owner_id = self.request.user.pk
         return super().form_valid(form)
@@ -47,6 +52,11 @@ class UpdateEmployeeView(LoginRequiredMixin, UpdateView):
         context['profile'] = profile
         context['employee_id'] = employee_id
         return context
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['user'] = self.request.user
+        return kwargs
 
     def form_valid(self, form):
         form.instance.company_owner_id = self.request.user.pk
@@ -116,6 +126,7 @@ class DeleteEmployeeView(LoginRequiredMixin, DeleteView):
     # populate the form
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
+        kwargs['user'] = self.request.user
         kwargs['instance'] = self.object
         return kwargs
 

@@ -25,12 +25,20 @@ class CreateProcessView(LoginRequiredMixin, CreateView):
         context['profile'] = profile
         return context
 
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['user'] = self.request.user
+        return kwargs
+
     def form_valid(self, form):
         form.instance.owner_id = self.request.user.pk
         return super().form_valid(form)
 
     def get_success_url(self):
-        return reverse_lazy('process_list', kwargs={'pk': self.request.user.pk})
+        return reverse_lazy(
+            'process_list',
+            kwargs={'pk': self.request.user.pk}
+        )
 
 
 class UpdateProcessView(LoginRequiredMixin, UpdateView):
@@ -48,6 +56,11 @@ class UpdateProcessView(LoginRequiredMixin, UpdateView):
         context['profile'] = profile
         context['process_id'] = process_id
         return context
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['user'] = self.request.user
+        return kwargs
 
     def form_valid(self, form):
         form.instance.owner_id = self.request.user.pk
@@ -97,8 +110,8 @@ class DetailsProcessView(LoginRequiredMixin, DetailView):
 def process_details(request, pk, process_id):
     profile = Profile.objects.get(pk=request.user.pk)
     process = Process.objects.get(pk=process_id)
-
     form = UpdateProcessForm(instance=process)
+
     if request.method == 'POST':
         form = UpdateProcessForm(request.POST, instance=process)
         if form.is_valid():
@@ -116,8 +129,8 @@ def process_details(request, pk, process_id):
 def process_update(request, pk, process_id):
     profile = Profile.objects.get(pk=request.user.pk)
     process = Department.objects.get(pk=process_id)
-
     form = CreateProcessForm(instance=process)
+
     if request.method == 'POST':
         form = UpdateProcessForm(request.POST, instance=process)
         if form.is_valid():
@@ -152,6 +165,7 @@ class DeleteProcessView(LoginRequiredMixin, DeleteView):
     # populate the form
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
+        kwargs['user'] = self.request.user
         kwargs['instance'] = self.object
         return kwargs
 

@@ -7,12 +7,6 @@ from CPDM.activities.models import Activity
 UserModel = get_user_model()
 
 
-class ActivitySerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Activity
-        fields = '__all__'
-
-
 class ActivityBaseSerializer(serializers.ModelSerializer):
     class Meta:
         model = Activity

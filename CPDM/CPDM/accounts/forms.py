@@ -1,5 +1,5 @@
 from django import forms
-from django.contrib.auth import forms as auth_forms, get_user_model, authenticate
+from django.contrib.auth import forms as auth_forms, get_user_model
 from django.utils.translation import gettext_lazy as _
 
 from CPDM.accounts.models import Profile
@@ -16,14 +16,13 @@ class AccountUserCreationForm(auth_forms.UserCreationForm):
         self.fields['password1'].widget.attrs['placeholder'] = 'Enter your password'
         # Set password2 field
         self.fields['password2'].widget.attrs['placeholder'] = 'Confirm your password'
-        self.fields['password2'].help_text = 'Confirm your password'
         self.fields['password2'].help_text = ''
 
     class Meta(auth_forms.UserCreationForm.Meta):
-        model = UserModel  # set model of the form as app UserModel
+        model = UserModel
         fields = (UserModel.USERNAME_FIELD,)
 
-    def save(self, commit=True):  # overwrite save() method to create profile
+    def save(self, commit=True):
         user = super().save(commit=commit)
 
         profile = Profile(
@@ -51,9 +50,9 @@ class AccountLoginForm(auth_forms.AuthenticationForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['username'].label = 'Email'         # Change the field label
+        self.fields['username'].label = 'Email'
         self.fields['username'].widget.attrs.update(
-            {'placeholder': 'Email'})                   # Add placeholder
+            {'placeholder': 'Email'})
         self.fields['password'].widget.attrs.update(
             {'placeholder': 'Password'})
 
@@ -67,21 +66,3 @@ class AccountLoginForm(auth_forms.AuthenticationForm):
     def clean_username(self):
         # Normalize the email address by lowercasing the domain part
         return self.cleaned_data['username'].lower()
-
-    # def clean(self):
-    #
-    #     email = self.cleaned_data.get('username')
-    #     password = self.cleaned_data.get('password')
-    #
-    #     if email is not None and password:
-    #         self.user_cache = authenticate(self.request, username=email, password=password)
-    #         if self.user_cache is None:
-    #             raise forms.ValidationError(
-    #                 self.error_messages['invalid_login'],
-    #                 code='invalid_login',
-    #                 params={'username': self.username_field.verbose_name},
-    #             )
-    #         else:
-    #             self.confirm_login_allowed(self.user_cache)
-    #
-    #     return self.cleaned_data

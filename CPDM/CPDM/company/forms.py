@@ -5,13 +5,12 @@ from CPDM.company.models import Company
 
 class CompanyCreateForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
-        super(CompanyCreateForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         self.fields['website'].widget.attrs['placeholder'] = 'https://..'
 
     class Meta:
         model = Company
         fields = ('type', 'name', 'industry', 'website')
-
 
 
 class CompanyUpdateForm(forms.ModelForm):

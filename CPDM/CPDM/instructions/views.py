@@ -24,6 +24,11 @@ class CreateInstructionView(LoginRequiredMixin, CreateView):
         context['profile'] = profile
         return context
 
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['user'] = self.request.user
+        return kwargs
+
     def form_valid(self, form):
         form.instance.owner_id = self.request.user.pk
         return super().form_valid(form)
@@ -47,6 +52,11 @@ class UpdateInstructionView(LoginRequiredMixin, UpdateView):
         context['profile'] = profile
         context['instruction_id'] = instruction_id
         return context
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['user'] = self.request.user
+        return kwargs
 
     def form_valid(self, form):
         form.instance.owner_id = self.request.user.pk
@@ -113,6 +123,7 @@ class DeleteInstructionView(LoginRequiredMixin, DeleteView):
     # populate the form
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
+        kwargs['user'] = self.request.user
         kwargs['instance'] = self.object
         return kwargs
 
