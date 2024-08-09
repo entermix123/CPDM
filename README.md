@@ -1,6 +1,7 @@
 # CPDM
 Company Planning and Development Manager
 
+Project Defense 14.04 2024 - SoftUni Course Django Advanced February 2024 - https://softuni.bg/trainings/4392/django-advanced-february-2024
 
 
 -------------------------------------------
