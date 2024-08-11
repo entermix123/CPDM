@@ -8,7 +8,6 @@ Project Defense 14.04 2024 - SoftUni Course Django Advanced February 2024 - http
 RUN APPLICATION IN DEVELOPMENT ENVIRONMENT:
 -------------------------------------------
 
-
 1. Set up PostgreSQL DataBase
 	- Go to Docker.com, register an account and login
 	- Download, install Docker Desktop or else for specific OS and login
