@@ -3,16 +3,64 @@ Company Planning and Development Manager
 
 Project Defense 14.04 2024 - SoftUni Course Django Advanced February 2024 - https://softuni.bg/trainings/4392/django-advanced-february-2024
 
+The project is developed with focus on Company planning, process development and management purposes. Server side rendering, CRUD operations for intermidiate database models structure. Basic visualization. Basic REST APIs implemented. 
 
--------------------------------------------
-RUN APPLICATION IN DEVELOPMENT ENVIRONMENT:
--------------------------------------------
+1. Download the project on your computer
+2. Below You will find options to run the App with VsCode or PyCharm Professional.
+
+-------------------------------------------------------
+RUN APPLICATION IN DEVELOPMENT ENVIRONMENT WITH VSCODE:
+-------------------------------------------------------
+
+1. Register and Install Docker --> https://www.docker.com/
+
+2. Install PostgreSQL:
+	terminal --> docker run -p 5432:5432 -e POSTGRES_USER=postgres-user -e POSTGRES_PASSWORD=password -d -v my-postgres-data:/var/lib/postgresql/data --name custom-name postgres:latest
+
+3. Install PgAdmin:
+	terminal --> docker run -p 5050:80 -e PGADMIN_DEFAULT_EMAIL=some@email.com -e PGADMIN_DEFAULT_PASSWORD=password -v my-data:/var/lib/pgadmin -d dpage/pgadmin4
+
+4. Open PgAdmin: Browser --> http://localhost:5050/
+	Follow the instruction, connect to PostgreSQL and create DB with name 'cpdm_db_latest' instead of 'postgres'
+
+	Connection instruction:
+	When you first log in to pgAdmin, you will not have any connections to the database, and you will need to create one.
+	Click on the icon "Add New Server".
+	Open the Connection Tab and write down the host name (always "host.docker.internal"), port of the container (in this example is "5432"), the maintenance database is "postgres", your username and password which you chose when running  the PostgreSQL container 	(in this example "postgres-user" and "password"). Click "Save" to save the server:
+
+5. Open The project in VsCode.
+
+6. Navigate to ~CPDM\CPDM\CPDM where manage.py file is:
+	terminal --> cd CPDM\CPDM
+
+7. Create virtual environment directory:
+	terminal --> python -m venv .venv
+
+8. Activate virtual environment:
+	terminal --> .venv/Scripts/activate
+
+9. Install dependancies:
+	terminal --> pip install requirements.txt
+
+10. Apply migrations:
+	terminal --> python manage.py migrate
+
+11. Start hte application:
+ 	terminal --> python manage.py runserver
+
+12. Open the Application in Browser:
+	Browser --> http://127.0.0.1:8000/
+
+
+---------------------------------------------------------------------
+RUN APPLICATION IN DEVELOPMENT ENVIRONMENT WITH PYCHARM PROFESSIONAL:
+---------------------------------------------------------------------
 
 1. Set up PostgreSQL DataBase
 	- Go to Docker.com, register an account and login
 	- Download, install Docker Desktop or else for specific OS and login
 	- Start PostgreSQL container:
-		- terminal --> docker run -p 5432:5432 -e POSTGRES_USER=postgres-user -e POSTGRES_PASSWORD=password -d -v my-postgres-data:/var/lib/postgresql/data --name my_postgresql postgres:latest
+		- terminal --> docker run -p 5432:5432 -e POSTGRES_USER=postgres-user -e POSTGRES_PASSWORD=password -d -v my-postgres-data:/var/lib/postgresql/data --name my_postgresql postgres:latest 
 
 2. Open PyCharm Proffesional or else.
 	- File / Project from Version Control...
