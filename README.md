@@ -30,7 +30,7 @@ RUN APPLICATION IN DEVELOPMENT ENVIRONMENT WITH VSCODE:
 
 5. Open The project in VsCode.
 
-6. Navigate to ~CPDM\CPDM\CPDM where manage.py file is:
+6. Navigate to the folder that contains 'manage.py' file:
 	terminal --> cd CPDM\CPDM
 
 7. Create virtual environment directory:
