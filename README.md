@@ -40,7 +40,7 @@ RUN APPLICATION IN DEVELOPMENT ENVIRONMENT WITH VSCODE:
 	terminal --> .venv/Scripts/activate
 
 9. Install dependancies:
-	terminal --> pip install requirements.txt
+	terminal --> pip install -r requirements.txt
 
 10. Apply migrations:
 	terminal --> python manage.py migrate
